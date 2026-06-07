@@ -1,14 +1,12 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import type { AppMode, League } from "@/types";
+import type { AppMode } from "@/types";
 
 interface UserState {
   username: string;
-  xp: number;
-  league: League;
-  streak: number;
   preferredMode: AppMode;
   onboardingComplete: boolean;
+  setUsername: (username: string) => void;
   setPreferredMode: (mode: AppMode) => void;
   completeOnboarding: () => void;
 }
@@ -16,12 +14,10 @@ interface UserState {
 export const useUserStore = create<UserState>()(
   devtools(
     (set) => ({
-      username: "coder",
-      xp: 0,
-      league: "bronze",
-      streak: 0,
+      username: "guest",
       preferredMode: "algorithms",
       onboardingComplete: false,
+      setUsername: (username) => set({ username }),
       setPreferredMode: (mode) => set({ preferredMode: mode }),
       completeOnboarding: () => set({ onboardingComplete: true }),
     }),

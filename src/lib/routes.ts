@@ -10,5 +10,4 @@ export const routes = {
   questions: "/questions",
   question: (slug: string) => `/questions/${slug}`,
   profile: "/profile",
-  leaderboard: "/leaderboard",
 } as const;

@@ -2,29 +2,25 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Keyboard,
-  LayoutDashboard,
-  List,
-  Trophy,
-  User,
-} from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import { Keyboard, LayoutDashboard, List, LogOut, User } from "lucide-react";
 import { mainNav } from "@/constants/navigation";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/cn";
-import { useUserStore } from "@/stores/userStore";
+import { Button } from "@/components/ui/Button";
 
 const iconMap = {
   "layout-dashboard": LayoutDashboard,
   keyboard: Keyboard,
   list: List,
-  trophy: Trophy,
   user: User,
 } as const;
 
 export function AppNav() {
   const pathname = usePathname();
-  const { username, xp, streak } = useUserStore();
+  const { data: session } = useSession();
+  const displayName = session?.user?.name ?? "User";
+  const initials = displayName.slice(0, 2).toUpperCase();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
@@ -66,18 +62,21 @@ export function AppNav() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-4 text-sm">
-          <div className="hidden items-center gap-3 text-muted sm:flex">
-            <span>{streak} day streak</span>
-            <span className="text-border">|</span>
-            <span>{xp} XP</span>
-          </div>
+        <div className="flex items-center gap-3 text-sm">
+          <span className="hidden text-muted sm:inline">{displayName}</span>
           <Link
             href={routes.profile}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-elevated text-xs font-medium text-foreground"
           >
-            {username.slice(0, 2).toUpperCase()}
+            {initials}
           </Link>
+          <Button
+            variant="ghost"
+            className="hidden px-2 sm:inline-flex"
+            onClick={() => signOut({ callbackUrl: routes.login })}
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     </header>

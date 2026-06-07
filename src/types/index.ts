@@ -2,14 +2,6 @@ export type AppMode = "algorithms" | "questions";
 
 export type Difficulty = "easy" | "medium" | "hard";
 
-export type League =
-  | "bronze"
-  | "silver"
-  | "gold"
-  | "platinum"
-  | "diamond"
-  | "master";
-
 export interface NavItem {
   label: string;
   href: string;
@@ -38,6 +30,7 @@ export interface ProblemSummary {
   difficulty: Difficulty;
   source: "leetcode" | "codeforces" | "cses";
   topics: string[];
+  solutionCode: string;
 }
 
 export interface SessionSummary {

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { SessionProvider } from "@/features/auth/components/SessionProvider";
+import { UserSync } from "@/features/auth/components/UserSync";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -17,7 +19,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "CodeType — Algorithm typing practice",
   description:
-    "Gamified typing practice for competitive programmers. Build muscle memory for C++ STL and LeetCode solutions.",
+    "Typing practice for competitive programmers. Build muscle memory for C++ STL and LeetCode solutions.",
 };
 
 export default function RootLayout({
@@ -30,7 +32,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
       >
-        {children}
+        <SessionProvider>
+          <UserSync />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
