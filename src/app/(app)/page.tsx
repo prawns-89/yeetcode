@@ -1,4 +1,5 @@
 import { ModeCard } from "@/components/dashboard/ModeCard";
+import { AlgorithmsProgress } from "@/features/algorithms/components/AlgorithmsProgress";
 import { RecentSessionsTable } from "@/components/dashboard/RecentSessionsTable";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
@@ -38,7 +39,7 @@ export default function DashboardPage() {
           mode="algorithms"
           title="Algorithms"
           description="Structured C++ STL curriculum from foundations through graphs and DP."
-          progress="Track 1 · Chapter 1.1"
+          progress={<AlgorithmsProgress />}
           href={routes.algorithms}
         />
         <ModeCard

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   createTypingSession,
   handleTypingBackspace,
@@ -14,15 +14,29 @@ import type {
   TypingSessionState,
 } from "@/features/typing/types";
 
-export function useTypingSession(source: string) {
+interface UseTypingSessionOptions {
+  onComplete?: (result: TypingSessionResult) => void;
+}
+
+export function useTypingSession(
+  source: string,
+  options: UseTypingSessionOptions = {},
+) {
   const [session, setSession] = useState<TypingSessionState>(() =>
     createTypingSession(source),
   );
   const [showResult, setShowResult] = useState(false);
+  const reportedComplete = useRef(false);
+  const onCompleteRef = useRef(options.onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = options.onComplete;
+  }, [options.onComplete]);
 
   useEffect(() => {
     setSession(createTypingSession(source));
     setShowResult(false);
+    reportedComplete.current = false;
   }, [source]);
 
   useEffect(() => {
@@ -38,10 +52,11 @@ export function useTypingSession(source: string) {
   }, [session.startedAt, session.isComplete]);
 
   useEffect(() => {
-    if (session.isComplete) {
-      setShowResult(true);
-    }
-  }, [session.isComplete]);
+    if (!session.isComplete || reportedComplete.current) return;
+    reportedComplete.current = true;
+    onCompleteRef.current?.(toSessionResult(session));
+    setShowResult(true);
+  }, [session.isComplete, session]);
 
   const onKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -49,6 +64,7 @@ export function useTypingSession(source: string) {
         event.preventDefault();
         setSession(resetTypingSession(source));
         setShowResult(false);
+        reportedComplete.current = false;
         return;
       }
 
@@ -74,6 +90,7 @@ export function useTypingSession(source: string) {
   const reset = useCallback(() => {
     setSession(resetTypingSession(source));
     setShowResult(false);
+    reportedComplete.current = false;
   }, [source]);
 
   const dismissResult = useCallback(() => {

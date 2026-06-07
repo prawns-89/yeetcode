@@ -5,16 +5,22 @@ import { CharSpan } from "@/features/typing/components/CharSpan";
 import { ResultModal } from "@/features/typing/components/ResultModal";
 import { useTypingSession } from "@/features/typing/hooks/useTypingSession";
 import { formatElapsed } from "@/features/typing/lib/metrics";
+import type { TypingSessionResult } from "@/features/typing/types";
 
 interface TypingCanvasProps {
   code: string;
   language?: string;
+  onComplete?: (result: TypingSessionResult) => void;
 }
 
-export function TypingCanvas({ code, language = "C++" }: TypingCanvasProps) {
+export function TypingCanvas({
+  code,
+  language = "C++",
+  onComplete,
+}: TypingCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { session, result, showResult, reset, dismissResult } =
-    useTypingSession(code);
+    useTypingSession(code, { onComplete });
 
   useEffect(() => {
     containerRef.current?.focus();

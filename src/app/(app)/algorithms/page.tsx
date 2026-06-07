@@ -1,6 +1,6 @@
-import { TrackCard } from "@/components/algorithms/TrackCard";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { algorithmTracks } from "@/constants/curriculum";
+import { algorithmTracks } from "@/features/algorithms/constants/tracks";
+import { TrackCard } from "@/features/algorithms/components/TrackCard";
 
 export default function AlgorithmsPage() {
   return (
@@ -11,8 +11,8 @@ export default function AlgorithmsPage() {
       />
 
       <div className="grid gap-4 md:grid-cols-2">
-        {algorithmTracks.map((track, index) => (
-          <TrackCard key={track.id} track={track} index={index} />
+        {algorithmTracks.map((track) => (
+          <TrackCard key={track.id} track={track} />
         ))}
       </div>
     </div>

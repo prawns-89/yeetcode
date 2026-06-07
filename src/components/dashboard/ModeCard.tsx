@@ -7,7 +7,7 @@ interface ModeCardProps {
   mode: AppMode;
   title: string;
   description: string;
-  progress: string;
+  progress: React.ReactNode;
   href: string;
 }
 
