@@ -1,10 +1,8 @@
-import { getServerSession } from "next-auth/next";
 import { ModeCard } from "@/components/dashboard/ModeCard";
 import { RecentSessionsTable } from "@/components/dashboard/RecentSessionsTable";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
-import { authOptions } from "@/features/auth/auth-options";
 import { AlgorithmsProgress } from "@/features/algorithms/components/AlgorithmsProgress";
 import { QuestionsProgress } from "@/features/questions/components/QuestionsProgress";
 import {
@@ -14,20 +12,15 @@ import {
 import { routes } from "@/lib/routes";
 
 export default async function DashboardPage() {
-  const session = await getServerSession(authOptions);
-  const userId = session?.user?.id;
-
-  const [stats, recentSessions] = userId
-    ? await Promise.all([
-        getUserStats(userId),
-        getRecentSessions(userId, 5),
-      ])
-    : [{ sessionCount: 0, bestWpm: null, averageAccuracy: null }, []];
+  const [stats, recentSessions] = await Promise.all([
+    getUserStats(),
+    getRecentSessions(5),
+  ]);
 
   return (
     <div>
       <PageHeader
-        title={`Welcome${session?.user?.name ? `, ${session.user.name}` : ""}`}
+        title="Welcome"
         description="Practice C++ syntax and type verified competitive programming solutions."
         action={
           <ButtonLink href={routes.select} variant="secondary">

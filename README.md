@@ -1,33 +1,37 @@
 # CodeType
 
-Gamified typing practice for competitive programmers. Build muscle memory for C++ STL syntax and LeetCode-style solutions.
+Gamified typing practice for competitive programmers. Build muscle memory for C++ STL syntax and over 3,400 LeetCode-style verified solutions.
+
+**Note:** This application is designed to be a **local-first, single-user** desktop experience. Your data is yours, stored locally, and there is no authentication or external server tracking.
 
 ## Features
 
-- **Algorithms mode** — 4-track C++ curriculum (Foundations → Graphs & Advanced) with chapter unlocks
-- **Questions mode** — 20 curated NeetCode-style problems with markdown descriptions
-- **Typing engine** — Monkeytype-style canvas with WPM, accuracy, error highlighting
-- **Progress tracking** — Sessions, personal bests, and curriculum progress in SQLite
-- **Auth** — Dev login (no setup) or GitHub/Google OAuth
+- **Local-First Architecture** — No accounts, no cloud sync, your data stays entirely on your local machine using an integrated SQLite database.
+- **Algorithms mode** — 4-track C++ curriculum (Foundations → Graphs & Advanced) with chapter unlocks.
+- **Questions mode** — Over 3,400 curated NeetCode-style problems with markdown descriptions and verified C++ solutions parsed from `doocs/leetcode`.
+- **Typing engine** — Monkeytype-style canvas with WPM, accuracy, and error highlighting.
+- **Progress tracking** — Sessions, personal bests, and curriculum progress tracked natively.
 
 ## Quick start
 
+To start training, simply clone the repository and run the app locally:
+
 ```bash
-# Install dependencies
+# 1. Clone the repository
+git clone https://github.com/yourusername/codetype.git
+cd codetype
+
+# 2. Install dependencies
 npm install
 
-# Set up environment
-cp .env.example .env.local
-# Edit .env.local — NEXTAUTH_SECRET is required
+# 3. Create your local database
+npx prisma db push
 
-# Create database
-npm run db:migrate
-
-# Start dev server (port 3000)
-npm run dev:clean
+# 4. Start the development server
+npm run dev
 ```
 
-Open [http://localhost:3000/login](http://localhost:3000/login) and click **Continue as developer**.
+Open [http://localhost:3000](http://localhost:3000) in your browser. You will immediately be dropped into the dashboard.
 
 ## Scripts
 
@@ -36,8 +40,8 @@ Open [http://localhost:3000/login](http://localhost:3000/login) and click **Cont
 | `npm run dev` | Start dev server on port 3000 |
 | `npm run dev:clean` | Clear `.next` cache and start fresh |
 | `npm run build` | Production build |
-| `npm run db:migrate` | Apply Prisma migrations |
-| `npm run db:push` | Push schema without migration |
+| `npx prisma db push` | Push the Prisma schema to the SQLite DB |
+| `npx prisma studio` | View your raw typing stats in Prisma Studio |
 
 ## Project structure
 
@@ -46,35 +50,15 @@ src/
   app/              # Next.js routes
   features/
     algorithms/     # Curriculum, unlock logic, progress
-    auth/           # NextAuth, dev login
-    questions/      # Problem bank, filters
-    sessions/       # Save/query typing sessions
-    typing/         # Typing engine
+    questions/      # Problem bank, filters, 3400+ parsed JSON problems
+    sessions/       # Save/query typing sessions to local DB
+    typing/         # Custom typing engine
   components/       # Shared UI shell
   lib/              # Prisma client, utilities
-prisma/             # Schema + SQLite database
+  stores/           # Zustand client state (Persisted in localStorage)
+prisma/             # Schema + SQLite database (dev.db)
 ```
-
-## Environment variables
-
-```env
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-here
-DATABASE_URL="file:./prisma/dev.db"
-
-# Optional OAuth
-GITHUB_ID=
-GITHUB_SECRET=
-GOOGLE_ID=
-GOOGLE_SECRET=
-```
-
-## Troubleshooting
-
-**ChunkLoadError / Server error:** Multiple dev servers or stale cache. Stop all `next dev` processes, then run `npm run dev:clean`. Always use port 3000.
-
-**Database errors:** Run `npm run db:migrate` to create `prisma/dev.db`.
 
 ## Tech stack
 
-Next.js 14 · TypeScript · Tailwind CSS · Zustand · NextAuth · Prisma · SQLite
+Next.js 14 · TypeScript · Tailwind CSS · Zustand · Prisma · SQLite

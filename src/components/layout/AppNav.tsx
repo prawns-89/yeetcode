@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
-import { Keyboard, LayoutDashboard, List, LogOut, User } from "lucide-react";
+import { Keyboard, LayoutDashboard, List, User } from "lucide-react";
 import { mainNav } from "@/constants/navigation";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/cn";
-import { Button } from "@/components/ui/Button";
+import { useUserStore } from "@/stores/userStore";
 
 const iconMap = {
   "layout-dashboard": LayoutDashboard,
@@ -18,9 +17,8 @@ const iconMap = {
 
 export function AppNav() {
   const pathname = usePathname();
-  const { data: session } = useSession();
-  const displayName = session?.user?.name ?? "User";
-  const initials = displayName.slice(0, 2).toUpperCase();
+  const username = useUserStore((s) => s.username);
+  const initials = username.slice(0, 2).toUpperCase();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
@@ -63,20 +61,13 @@ export function AppNav() {
         </div>
 
         <div className="flex items-center gap-3 text-sm">
-          <span className="hidden text-muted sm:inline">{displayName}</span>
+          <span className="hidden text-muted sm:inline">{username}</span>
           <Link
             href={routes.profile}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-elevated text-xs font-medium text-foreground"
           >
             {initials}
           </Link>
-          <Button
-            variant="ghost"
-            className="hidden px-2 sm:inline-flex"
-            onClick={() => signOut({ callbackUrl: routes.login })}
-          >
-            <LogOut className="h-4 w-4" />
-          </Button>
         </div>
       </div>
     </header>

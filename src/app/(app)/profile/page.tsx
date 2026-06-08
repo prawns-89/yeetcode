@@ -1,7 +1,5 @@
-import { getServerSession } from "next-auth/next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { authOptions } from "@/features/auth/auth-options";
 import { formatAttemptedAt } from "@/features/sessions/lib/format";
 import {
   getPersonalBests,
@@ -10,22 +8,11 @@ import {
 } from "@/features/sessions/lib/queries";
 
 export default async function ProfilePage() {
-  const session = await getServerSession(authOptions);
-  const userId = session?.user?.id;
-  const displayName = session?.user?.name ?? "User";
-  const initials = displayName.slice(0, 2).toUpperCase();
-
-  const [stats, recentSessions, personalBests] = userId
-    ? await Promise.all([
-        getUserStats(userId),
-        getRecentSessions(userId, 10),
-        getPersonalBests(userId, 10),
-      ])
-    : [
-        { sessionCount: 0, bestWpm: null, averageAccuracy: null },
-        [],
-        [],
-      ];
+  const [stats, recentSessions, personalBests] = await Promise.all([
+    getUserStats(),
+    getRecentSessions(10),
+    getPersonalBests(10),
+  ]);
 
   return (
     <div>
@@ -37,10 +24,10 @@ export default async function ProfilePage() {
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-1">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface-elevated text-lg font-semibold">
-            {initials}
+            LU
           </div>
-          <h2 className="mt-4 text-xl font-semibold">{displayName}</h2>
-          <p className="text-sm text-muted">{session?.user?.email}</p>
+          <h2 className="mt-4 text-xl font-semibold">Local User</h2>
+          <p className="text-sm text-muted">Local Database</p>
         </Card>
 
         <Card className="lg:col-span-2">

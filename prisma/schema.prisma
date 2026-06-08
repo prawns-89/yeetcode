@@ -7,23 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                 String               @id @default(cuid())
-  email              String               @unique
-  username           String
-  avatarUrl          String?
-  preferredMode      String               @default("algorithms")
-  onboardingComplete Boolean              @default(false)
-  createdAt          DateTime             @default(now())
-  sessions           TypingSession[]
-  personalBests      PersonalBest[]
-  curriculumProgress CurriculumProgress[]
-}
-
 model TypingSession {
   id           String   @id @default(cuid())
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   snippetId    String
   snippetTitle String
   mode         String
@@ -35,30 +20,22 @@ model TypingSession {
   completed    Boolean  @default(true)
   attemptedAt  DateTime @default(now())
 
-  @@index([userId, attemptedAt(sort: Desc)])
+  @@index([attemptedAt(sort: Desc)])
 }
 
 model PersonalBest {
-  userId       String
-  snippetId    String
+  snippetId    String   @id
   snippetTitle String   @default("")
   bestNetWpm   Int
   bestAccuracy Int
   achievedAt   DateTime
   sessionId    String?
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([userId, snippetId])
 }
 
 model CurriculumProgress {
-  userId           String
-  snippetId        String
+  snippetId        String   @id
   firstCompletedAt DateTime
   attemptCount     Int      @default(1)
   lastNetWpm       Int
   lastAccuracy     Int
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([userId, snippetId])
 }

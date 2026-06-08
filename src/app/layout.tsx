@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { SessionProvider } from "@/features/auth/components/SessionProvider";
-import { UserSync } from "@/features/auth/components/UserSync";
 import { ProgressHydrator } from "@/features/algorithms/components/ProgressHydrator";
 import "./globals.css";
 
@@ -18,11 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        <SessionProvider>
-          <UserSync />
-          <ProgressHydrator />
-          {children}
-        </SessionProvider>
+        <ProgressHydrator />
+        {children}
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import type { AppMode } from "@/types";
 
 interface UserState {
@@ -13,14 +13,17 @@ interface UserState {
 
 export const useUserStore = create<UserState>()(
   devtools(
-    (set) => ({
-      username: "guest",
-      preferredMode: "algorithms",
-      onboardingComplete: false,
-      setUsername: (username) => set({ username }),
-      setPreferredMode: (mode) => set({ preferredMode: mode }),
-      completeOnboarding: () => set({ onboardingComplete: true }),
-    }),
-    { name: "user-store" },
+    persist(
+      (set) => ({
+        username: "local_user",
+        preferredMode: "algorithms",
+        onboardingComplete: false,
+        setUsername: (username) => set({ username }),
+        setPreferredMode: (mode) => set({ preferredMode: mode }),
+        completeOnboarding: () => set({ onboardingComplete: true }),
+      }),
+      { name: "user-store" }
+    ),
+    { name: "user-store" }
   ),
 );

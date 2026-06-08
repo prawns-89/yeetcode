@@ -1,38 +1,30 @@
-import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
-import { authOptions } from "@/features/auth/auth-options";
-import { isRateLimited } from "@/features/sessions/lib/rate-limit";
+import { prisma } from "@/lib/prisma";
 import { saveTypingSession } from "@/features/sessions/lib/save-session";
 import { validateSessionInput } from "@/features/sessions/lib/validation";
 
-export async function POST(request: Request) {
-  const session = await getServerSession(authOptions);
-  const userId = session?.user?.id;
-
-  if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  if (isRateLimited(userId)) {
-    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
-  }
-
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
-  }
-
-  const input = validateSessionInput(body);
-  if (!input) {
-    return NextResponse.json({ error: "Invalid session data" }, { status: 400 });
-  }
-
-  const result = await saveTypingSession(userId, input);
-
-  return NextResponse.json({
-    sessionId: result.session.id,
-    isPersonalBest: result.isPersonalBest,
+export async function GET() {
+  const sessions = await prisma.typingSession.findMany({
+    orderBy: { attemptedAt: "desc" },
+    take: 50,
   });
+
+  return NextResponse.json(sessions);
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const input = validateSessionInput(body);
+
+    if (!input) {
+      return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+    }
+
+    const { isPersonalBest } = await saveTypingSession(input);
+    return NextResponse.json({ success: true, isPersonalBest });
+  } catch (error) {
+    console.error("Session save error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }

@@ -1,10 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import type { SaveSessionInput } from "@/features/sessions/types";
 
-export async function saveTypingSession(userId: string, input: SaveSessionInput) {
+export async function saveTypingSession(input: SaveSessionInput) {
   const session = await prisma.typingSession.create({
     data: {
-      userId,
       snippetId: input.snippetId,
       snippetTitle: input.snippetTitle,
       mode: input.mode,
@@ -18,12 +17,7 @@ export async function saveTypingSession(userId: string, input: SaveSessionInput)
   });
 
   const existingBest = await prisma.personalBest.findUnique({
-    where: {
-      userId_snippetId: {
-        userId,
-        snippetId: input.snippetId,
-      },
-    },
+    where: { snippetId: input.snippetId },
   });
 
   const isPersonalBest =
@@ -31,14 +25,8 @@ export async function saveTypingSession(userId: string, input: SaveSessionInput)
 
   if (isPersonalBest) {
     await prisma.personalBest.upsert({
-      where: {
-        userId_snippetId: {
-          userId,
-          snippetId: input.snippetId,
-        },
-      },
+      where: { snippetId: input.snippetId },
       create: {
-        userId,
         snippetId: input.snippetId,
         snippetTitle: input.snippetTitle,
         bestNetWpm: input.netWpm,
@@ -57,22 +45,12 @@ export async function saveTypingSession(userId: string, input: SaveSessionInput)
   }
 
   const existingProgress = await prisma.curriculumProgress.findUnique({
-    where: {
-      userId_snippetId: {
-        userId,
-        snippetId: input.snippetId,
-      },
-    },
+    where: { snippetId: input.snippetId },
   });
 
   if (existingProgress) {
     await prisma.curriculumProgress.update({
-      where: {
-        userId_snippetId: {
-          userId,
-          snippetId: input.snippetId,
-        },
-      },
+      where: { snippetId: input.snippetId },
       data: {
         attemptCount: existingProgress.attemptCount + 1,
         lastNetWpm: input.netWpm,
@@ -82,7 +60,6 @@ export async function saveTypingSession(userId: string, input: SaveSessionInput)
   } else {
     await prisma.curriculumProgress.create({
       data: {
-        userId,
         snippetId: input.snippetId,
         firstCompletedAt: session.attemptedAt,
         attemptCount: 1,
