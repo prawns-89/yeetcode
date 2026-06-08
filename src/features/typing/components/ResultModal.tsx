@@ -7,6 +7,7 @@ import type { TypingSessionResult } from "@/features/typing/types";
 interface ResultModalProps {
   open: boolean;
   result: TypingSessionResult;
+  isPersonalBest?: boolean;
   onRetry: () => void;
   onClose: () => void;
 }
@@ -14,6 +15,7 @@ interface ResultModalProps {
 export function ResultModal({
   open,
   result,
+  isPersonalBest = false,
   onRetry,
   onClose,
 }: ResultModalProps) {
@@ -22,7 +24,16 @@ export function ResultModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
       <Card className="w-full max-w-md">
-        <h2 className="text-lg font-semibold text-foreground">Session complete</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-foreground">
+            Session complete
+          </h2>
+          {isPersonalBest ? (
+            <span className="rounded-md bg-accent/20 px-2 py-0.5 text-xs font-medium text-accent">
+              New PB!
+            </span>
+          ) : null}
+        </div>
         <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-muted">Net WPM</p>

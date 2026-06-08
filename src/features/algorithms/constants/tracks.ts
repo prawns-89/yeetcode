@@ -1,59 +1,14 @@
 import type { AlgorithmTrack } from "@/features/algorithms/types";
 import { track1Foundations } from "@/features/algorithms/constants/track1";
-
-const track2Placeholder: AlgorithmTrack = {
-  id: "intermediate-stl",
-  name: "Intermediate STL",
-  description: "Maps, sets, heaps, deques, and algorithm header utilities.",
-  order: 2,
-  chapters: [
-    {
-      id: "2-1",
-      title: "std::map & std::set",
-      topic: "Ordered containers, bounds, erase",
-      estimatedMinutes: 22,
-      snippets: [],
-    },
-  ],
-};
-
-const track3Placeholder: AlgorithmTrack = {
-  id: "searching-sorting",
-  name: "Searching & Sorting",
-  description: "Binary search, two pointers, sliding window, prefix sums.",
-  order: 3,
-  chapters: [
-    {
-      id: "3-1",
-      title: "Binary search — iterative",
-      topic: "Classic lo/hi/mid pattern",
-      estimatedMinutes: 18,
-      snippets: [],
-    },
-  ],
-};
-
-const track4Placeholder: AlgorithmTrack = {
-  id: "graphs-advanced",
-  name: "Graphs & Advanced",
-  description: "BFS, DFS, shortest paths, DSU, DP, segment trees.",
-  order: 4,
-  chapters: [
-    {
-      id: "4-1",
-      title: "Graph representation",
-      topic: "Adjacency list, matrix, edge list",
-      estimatedMinutes: 18,
-      snippets: [],
-    },
-  ],
-};
+import { track2Intermediate } from "@/features/algorithms/constants/track2";
+import { track3Searching } from "@/features/algorithms/constants/track3";
+import { track4Graphs } from "@/features/algorithms/constants/track4";
 
 export const algorithmTracks: AlgorithmTrack[] = [
   track1Foundations,
-  track2Placeholder,
-  track3Placeholder,
-  track4Placeholder,
+  track2Intermediate,
+  track3Searching,
+  track4Graphs,
 ];
 
 export function getTrackById(trackId: string): AlgorithmTrack | undefined {
@@ -69,4 +24,12 @@ export function getChapter(
   const chapter = track.chapters.find((item) => item.id === chapterId);
   if (!chapter) return null;
   return { track, chapter };
+}
+
+export function getTotalSnippetCount(): number {
+  return algorithmTracks.reduce(
+    (sum, track) =>
+      sum + track.chapters.reduce((s, ch) => s + ch.snippets.length, 0),
+    0,
+  );
 }

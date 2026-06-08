@@ -1,5 +1,7 @@
 import { ModeCard } from "@/components/dashboard/ModeCard";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { getTotalSnippetCount } from "@/features/algorithms/constants/tracks";
+import { problems } from "@/features/questions/data/problems_client";
 import { routes } from "@/lib/routes";
 
 export default function SelectModePage() {
@@ -15,14 +17,14 @@ export default function SelectModePage() {
           mode="algorithms"
           title="Algorithms"
           description="Linear C++ STL tracks with chapter unlocks and snippet carousels."
-          progress="4 tracks · 27+ chapters"
+          progress={`4 tracks · ${getTotalSnippetCount()} snippets`}
           href={routes.algorithms}
         />
         <ModeCard
           mode="questions"
           title="Questions"
           description="LeetCode-style problem list with split-panel typing sessions."
-          progress="500+ problems planned"
+          progress={`${problems.length} problems`}
           href={routes.questions}
         />
       </div>

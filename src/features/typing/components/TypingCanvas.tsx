@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CharSpan } from "@/features/typing/components/CharSpan";
 import { ResultModal } from "@/features/typing/components/ResultModal";
 import { useTypingSession } from "@/features/typing/hooks/useTypingSession";
@@ -10,7 +10,7 @@ import type { TypingSessionResult } from "@/features/typing/types";
 interface TypingCanvasProps {
   code: string;
   language?: string;
-  onComplete?: (result: TypingSessionResult) => void;
+  onComplete?: (result: TypingSessionResult) => Promise<{ isPersonalBest?: boolean } | null | void>;
 }
 
 export function TypingCanvas({
@@ -19,12 +19,31 @@ export function TypingCanvas({
   onComplete,
 }: TypingCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isPersonalBest, setIsPersonalBest] = useState(false);
+
+  const handleComplete = async (result: TypingSessionResult) => {
+    if (onComplete) {
+      const saveResult = await onComplete(result);
+      if (saveResult?.isPersonalBest) setIsPersonalBest(true);
+    }
+  };
+
   const { session, result, showResult, reset, dismissResult } =
-    useTypingSession(code, { onComplete });
+    useTypingSession(code, { onComplete: handleComplete });
 
   useEffect(() => {
     containerRef.current?.focus();
   }, [code]);
+
+  const handleReset = () => {
+    setIsPersonalBest(false);
+    reset();
+  };
+
+  const handleClose = () => {
+    setIsPersonalBest(false);
+    dismissResult();
+  };
 
   const { metrics } = session;
 
@@ -66,8 +85,9 @@ export function TypingCanvas({
       <ResultModal
         open={showResult}
         result={result}
-        onRetry={reset}
-        onClose={dismissResult}
+        isPersonalBest={isPersonalBest}
+        onRetry={handleReset}
+        onClose={handleClose}
       />
     </>
   );

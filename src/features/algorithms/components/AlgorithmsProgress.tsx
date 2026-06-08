@@ -6,6 +6,7 @@ import { useCompletedSnippetSet } from "@/features/algorithms/store/progressStor
 
 export function AlgorithmsProgress() {
   const completedSnippets = useCompletedSnippetSet();
+
   const totalSnippets = track1Foundations.chapters.reduce(
     (sum, chapter) => sum + chapter.snippets.length,
     0,

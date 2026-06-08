@@ -15,7 +15,7 @@ import type {
 } from "@/features/typing/types";
 
 interface UseTypingSessionOptions {
-  onComplete?: (result: TypingSessionResult) => void;
+  onComplete?: (result: TypingSessionResult) => void | Promise<void>;
 }
 
 export function useTypingSession(
@@ -54,8 +54,10 @@ export function useTypingSession(
   useEffect(() => {
     if (!session.isComplete || reportedComplete.current) return;
     reportedComplete.current = true;
-    onCompleteRef.current?.(toSessionResult(session));
-    setShowResult(true);
+    const result = toSessionResult(session);
+    void Promise.resolve(onCompleteRef.current?.(result)).then(() => {
+      setShowResult(true);
+    });
   }, [session.isComplete, session]);
 
   const onKeyDown = useCallback(

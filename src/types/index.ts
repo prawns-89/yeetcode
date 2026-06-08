@@ -30,7 +30,6 @@ export interface ProblemSummary {
   difficulty: Difficulty;
   source: "leetcode" | "codeforces" | "cses";
   topics: string[];
-  solutionCode: string;
 }
 
 export interface SessionSummary {

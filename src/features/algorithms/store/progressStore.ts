@@ -8,6 +8,7 @@ import type { SnippetAttempt } from "@/features/algorithms/types";
 interface ProgressState {
   completedSnippets: string[];
   snippetStats: Record<string, SnippetAttempt>;
+  hydrated: boolean;
   recordAttempt: (
     trackId: string,
     chapterId: string,
@@ -19,6 +20,10 @@ interface ProgressState {
     chapterId: string,
     snippetId: string,
   ) => boolean;
+  hydrate: (data: {
+    completedSnippets: string[];
+    snippetStats: Record<string, SnippetAttempt>;
+  }) => void;
 }
 
 export const useProgressStore = create<ProgressState>()(
@@ -27,6 +32,7 @@ export const useProgressStore = create<ProgressState>()(
       (set, get) => ({
         completedSnippets: [],
         snippetStats: {},
+        hydrated: false,
         recordAttempt: (trackId, chapterId, snippetId, attempt) => {
           const key = snippetKey(trackId, chapterId, snippetId);
           set((state) => ({
@@ -45,6 +51,13 @@ export const useProgressStore = create<ProgressState>()(
         isSnippetComplete: (trackId, chapterId, snippetId) => {
           const key = snippetKey(trackId, chapterId, snippetId);
           return get().completedSnippets.includes(key);
+        },
+        hydrate: (data) => {
+          set({
+            completedSnippets: data.completedSnippets,
+            snippetStats: data.snippetStats,
+            hydrated: true,
+          });
         },
       }),
       { name: "codetype-algorithm-progress" },

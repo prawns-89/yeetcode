@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
-import { ProblemPanel } from "@/components/questions/ProblemPanel";
-import { TypingCanvas } from "@/features/typing/components/TypingCanvas";
-import { placeholderProblems } from "@/constants/curriculum";
+import { ProblemPanel } from "@/features/questions/components/ProblemPanel";
+import { QuestionTyping } from "@/features/questions/components/QuestionTyping";
+import { getProblemBySlug } from "@/features/questions/data/problems_server";
 
 interface QuestionPageProps {
   params: { slug: string };
 }
 
 export default function QuestionPage({ params }: QuestionPageProps) {
-  const problem = placeholderProblems.find((item) => item.slug === params.slug);
+  const problem = getProblemBySlug(params.slug);
 
   if (!problem) {
     notFound();
@@ -17,7 +17,11 @@ export default function QuestionPage({ params }: QuestionPageProps) {
   return (
     <div className="grid min-h-[calc(100vh-8rem)] gap-4 lg:grid-cols-[38%_62%]">
       <ProblemPanel problem={problem} />
-      <TypingCanvas code={problem.solutionCode} />
+      <QuestionTyping
+        slug={problem.slug}
+        title={problem.title}
+        code={problem.solutionCode}
+      />
     </div>
   );
 }

@@ -10,10 +10,12 @@ import {
   isChapterComplete,
   isChapterUnlocked,
 } from "@/features/algorithms/lib/unlock";
+import { snippetKey } from "@/features/algorithms/lib/keys";
 import {
   useCompletedSnippetSet,
   useProgressStore,
 } from "@/features/algorithms/store/progressStore";
+import { useSaveSession } from "@/features/sessions/hooks/useSaveSession";
 import type { AlgorithmChapter, AlgorithmTrack } from "@/features/algorithms/types";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -34,6 +36,7 @@ export function ChapterSession({
   const completedSnippets = useCompletedSnippetSet();
   const recordAttempt = useProgressStore((state) => state.recordAttempt);
   const isSnippetComplete = useProgressStore((state) => state.isSnippetComplete);
+  const { saveFromTypingResult } = useSaveSession();
 
   const unlocked = isChapterUnlocked(track, chapterIndex, completedSnippets);
   const progress = getChapterProgress(track.id, chapter, completedSnippets);
@@ -49,11 +52,17 @@ export function ChapterSession({
     [chapter.snippets, activeSnippetId],
   );
 
-  const handleComplete = (result: TypingSessionResult) => {
-    if (!activeSnippet) return;
+  const handleComplete = async (result: TypingSessionResult) => {
+    if (!activeSnippet) return null;
     recordAttempt(track.id, chapter.id, activeSnippet.id, {
       netWpm: result.netWpm,
       accuracy: result.accuracy,
+    });
+    return saveFromTypingResult(result, {
+      snippetId: snippetKey(track.id, chapter.id, activeSnippet.id),
+      snippetTitle: activeSnippet.title,
+      mode: "algorithms",
+      errors: result.errors,
     });
   };
 

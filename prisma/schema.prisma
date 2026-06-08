@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String               @id @default(cuid())
+  email              String               @unique
+  username           String
+  avatarUrl          String?
+  preferredMode      String               @default("algorithms")
+  onboardingComplete Boolean              @default(false)
+  createdAt          DateTime             @default(now())
+  sessions           TypingSession[]
+  personalBests      PersonalBest[]
+  curriculumProgress CurriculumProgress[]
+}
+
+model TypingSession {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  snippetId    String
+  snippetTitle String
+  mode         String
+  netWpm       Int
+  rawWpm       Int
+  accuracy     Int
+  secondsTaken Int
+  errors       Int      @default(0)
+  completed    Boolean  @default(true)
+  attemptedAt  DateTime @default(now())
+
+  @@index([userId, attemptedAt(sort: Desc)])
+}
+
+model PersonalBest {
+  userId       String
+  snippetId    String
+  snippetTitle String   @default("")
+  bestNetWpm   Int
+  bestAccuracy Int
+  achievedAt   DateTime
+  sessionId    String?
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, snippetId])
+}
+
+model CurriculumProgress {
+  userId           String
+  snippetId        String
+  firstCompletedAt DateTime
+  attemptCount     Int      @default(1)
+  lastNetWpm       Int
+  lastAccuracy     Int
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, snippetId])
+}
