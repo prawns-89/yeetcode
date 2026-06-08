@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { AppMode } from "@/types";
-import type { SessionRecord, UserStats } from "@/features/sessions/types";
+import type { SessionRecord, UserStats, PersonalBestRecord } from "@/features/sessions/types";
 
 export async function getRecentSessions(
   limit = 5,
@@ -45,9 +45,18 @@ export async function getUserStats(): Promise<UserStats> {
   };
 }
 
-export async function getPersonalBests(limit = 10) {
-  return prisma.personalBest.findMany({
+export async function getPersonalBests(limit = 10): Promise<PersonalBestRecord[]> {
+  const records = await prisma.personalBest.findMany({
     orderBy: { achievedAt: "desc" },
     take: limit,
   });
+
+  return records.map((record) => ({
+    snippetId: record.snippetId,
+    snippetTitle: (record as any).snippetTitle || record.snippetId,
+    bestNetWpm: record.bestNetWpm,
+    bestAccuracy: record.bestAccuracy,
+    achievedAt: record.achievedAt.toISOString(),
+    isPersonalBest: true,
+  }));
 }

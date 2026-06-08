@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Keyboard, LayoutDashboard, List, User } from "lucide-react";
@@ -17,8 +18,15 @@ const iconMap = {
 
 export function AppNav() {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
   const username = useUserStore((s) => s.username);
-  const initials = username.slice(0, 2).toUpperCase();
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const displayUsername = mounted ? username : "local_user";
+  const initials = displayUsername.slice(0, 2).toUpperCase();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
@@ -61,7 +69,7 @@ export function AppNav() {
         </div>
 
         <div className="flex items-center gap-3 text-sm">
-          <span className="hidden text-muted sm:inline">{username}</span>
+          <span className="hidden text-muted sm:inline">{displayUsername}</span>
           <Link
             href={routes.profile}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-elevated text-xs font-medium text-foreground"

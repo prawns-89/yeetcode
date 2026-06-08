@@ -1,3 +1,4 @@
+import { ProfileHeader } from "./ProfileHeader";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { formatAttemptedAt } from "@/features/sessions/lib/format";
@@ -22,13 +23,7 @@ export default async function ProfilePage() {
       />
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-1">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface-elevated text-lg font-semibold">
-            LU
-          </div>
-          <h2 className="mt-4 text-xl font-semibold">Local User</h2>
-          <p className="text-sm text-muted">Local Database</p>
-        </Card>
+        <ProfileHeader />
 
         <Card className="lg:col-span-2">
           <h3 className="font-semibold">Stats</h3>
@@ -101,7 +96,7 @@ export default async function ProfilePage() {
                       {record.snippetTitle || record.snippetId}
                     </p>
                     <p className="text-muted">
-                      {formatAttemptedAt(record.achievedAt.toISOString())}
+                      {formatAttemptedAt(record.achievedAt)}
                     </p>
                   </div>
                   <div className="text-right">
