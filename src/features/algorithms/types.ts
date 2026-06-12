@@ -5,6 +5,7 @@ export interface AlgorithmSnippet {
   title: string;
   difficulty: SnippetDifficulty;
   code: string;
+  explanation?: string;
 }
 
 export interface AlgorithmChapter {
@@ -21,6 +22,7 @@ export interface AlgorithmTrack {
   description: string;
   order: number;
   chapters: AlgorithmChapter[];
+  language?: string;
 }
 
 export interface SnippetAttempt {

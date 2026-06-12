@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { QuestionsList } from "@/features/questions/components/QuestionsList";
 import { problems } from "@/features/questions/data/problems_client";
@@ -21,7 +22,9 @@ export default async function QuestionsPage() {
         title="Questions"
         description={`${problems.length} curated NeetCode-style problems with verified C++ solutions.`}
       />
-      <QuestionsList completedSlugs={completedSlugs} />
+      <Suspense fallback={<div className="text-sm text-muted">Loading questions...</div>}>
+        <QuestionsList completedSlugs={completedSlugs} />
+      </Suspense>
     </div>
   );
 }

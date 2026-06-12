@@ -53,7 +53,7 @@ export async function getPersonalBests(limit = 10): Promise<PersonalBestRecord[]
 
   return records.map((record) => ({
     snippetId: record.snippetId,
-    snippetTitle: (record as any).snippetTitle || record.snippetId,
+    snippetTitle: ("snippetTitle" in record ? (record as { snippetTitle?: string }).snippetTitle : "") || record.snippetId,
     bestNetWpm: record.bestNetWpm,
     bestAccuracy: record.bestAccuracy,
     achievedAt: record.achievedAt.toISOString(),

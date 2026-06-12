@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
 import { AlgorithmsProgress } from "@/features/algorithms/components/AlgorithmsProgress";
 import { QuestionsProgress } from "@/features/questions/components/QuestionsProgress";
+import { NeetcodeProgress } from "@/features/questions/components/NeetcodeProgress";
 import {
   getRecentSessions,
   getUserStats,
@@ -50,7 +51,7 @@ export default async function DashboardPage() {
         </Card>
       </div>
 
-      <div className="mb-8 grid gap-4 lg:grid-cols-2">
+      <div className="mb-8 grid gap-4 md:grid-cols-3">
         <ModeCard
           mode="algorithms"
           title="Algorithms"
@@ -64,6 +65,13 @@ export default async function DashboardPage() {
           description="Type verified solutions to curated LeetCode-style problems."
           progress={<QuestionsProgress />}
           href={routes.questions}
+        />
+        <ModeCard
+          mode="questions"
+          title="NeetCode 150"
+          description="Build core algorithm intuition by typing the classic 150 interview problems."
+          progress={<NeetcodeProgress />}
+          href={`${routes.questions}?playlist=neetcode150`}
         />
       </div>
 

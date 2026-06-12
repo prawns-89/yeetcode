@@ -51,12 +51,14 @@ export function ProblemPanel({ problem }: ProblemPanelProps) {
 
       <div className="prose prose-invert mt-6 max-w-none text-sm">
         {activeTab === "Description" ? (
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {problem.description}
-          </ReactMarkdown>
+          <div dangerouslySetInnerHTML={{ __html: problem.description }} />
         ) : (
           <div className="space-y-4 text-muted">
-            <p>{problem.approach}</p>
+            <div className="prose prose-invert max-w-none text-sm leading-relaxed">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {problem.approach}
+              </ReactMarkdown>
+            </div>
             <div className="grid grid-cols-2 gap-4 rounded-lg border border-border bg-surface-elevated p-4 text-sm">
               <div>
                 <p className="text-xs uppercase text-muted">Time</p>

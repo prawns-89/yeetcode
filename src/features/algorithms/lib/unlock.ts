@@ -9,7 +9,7 @@ export function isTrackUnlocked(
   completedSnippets: Set<string>,
   snippetStats: Record<string, { accuracy: number }>,
 ): boolean {
-  if (track.order === 1) return true;
+  if (track.order === 1 || track.order === 5 || track.order === 6) return true;
 
   const previousTrack = tracks.find((item) => item.order === track.order - 1);
   if (!previousTrack) return false;
