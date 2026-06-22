@@ -3,10 +3,23 @@ import type { ProblemSummary } from "@/types";
 
 export const problems = metaData as ProblemSummary[];
 
-export const allTopics = [
-  "all",
-  "Algorithms"
-] as const;
+// Extract all unique topics dynamically and sort by frequency
+const getTopicsByFrequency = (): string[] => {
+  const counts: Record<string, number> = {};
+  for (const p of problems) {
+    if (p.topics) {
+      for (const t of p.topics) {
+        if (t !== "All" && t !== "Algorithms") {
+          counts[t] = (counts[t] || 0) + 1;
+        }
+      }
+    }
+  }
+  const sorted = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+  return ["all", ...sorted];
+};
+
+export const allTopics = getTopicsByFrequency();
 
 export function filterProblems({
   difficulty = "all",
