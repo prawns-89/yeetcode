@@ -39,3 +39,13 @@ model CurriculumProgress {
   lastNetWpm       Int
   lastAccuracy     Int
 }
+
+model SnippetNote {
+  id        String   @id @default(cuid())
+  snippetId String
+  lineIndex Int
+  note      String
+  updatedAt DateTime @updatedAt
+
+  @@unique([snippetId, lineIndex])
+}

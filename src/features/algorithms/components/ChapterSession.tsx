@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { ChapterIntro } from "@/features/algorithms/components/ChapterIntro";
 import { SnippetCard } from "@/features/algorithms/components/SnippetCard";
 import { TypingCanvas } from "@/features/typing/components/TypingCanvas";
+import { CodeStudyViewer } from "@/features/typing/components/CodeStudyViewer";
 import type { TypingSessionResult } from "@/features/typing/types";
 import {
   getChapterProgress,
@@ -45,6 +46,7 @@ export function ChapterSession({
   const chapterDone = isChapterComplete(track.id, chapter, completedSnippets);
 
   const [step, setStep] = useState<SessionStep>("intro");
+  const [sessionMode, setSessionMode] = useState<"typing" | "study">("typing");
   const [activeSnippetId, setActiveSnippetId] = useState(
     chapter.snippets[0]?.id ?? "",
   );
@@ -129,7 +131,27 @@ export function ChapterSession({
               <h2 className="text-lg font-semibold text-foreground">
                 {activeSnippet.title}
               </h2>
-              <p className="text-sm text-muted">{chapter.title}</p>
+              <div className="flex items-center gap-3 mt-1">
+                <p className="text-sm text-muted">{chapter.title}</p>
+                <div className="flex bg-surface-elevated rounded-md border border-border p-0.5">
+                  <button
+                    onClick={() => setSessionMode("typing")}
+                    className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                      sessionMode === "typing" ? "bg-accent/10 text-accent font-medium" : "text-muted hover:text-foreground"
+                    }`}
+                  >
+                    Practice
+                  </button>
+                  <button
+                    onClick={() => setSessionMode("study")}
+                    className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                      sessionMode === "study" ? "bg-accent/10 text-accent font-medium" : "text-muted hover:text-foreground"
+                    }`}
+                  >
+                    Study Notes
+                  </button>
+                </div>
+              </div>
             </div>
             <Button variant="ghost" onClick={() => setStep("carousel")}>
               Back to snippets
@@ -138,12 +160,21 @@ export function ChapterSession({
           
           <div className="grid gap-4 lg:grid-cols-[62%_38%]">
             <div className="flex flex-col">
-              <TypingCanvas
-                key={activeSnippet.id}
-                code={activeSnippet.code}
-                language={track.language ?? "C++"}
-                onComplete={handleComplete}
-              />
+              {sessionMode === "typing" ? (
+                <TypingCanvas
+                  key={activeSnippet.id}
+                  code={activeSnippet.code}
+                  language={track.language ?? "C++"}
+                  onComplete={handleComplete}
+                />
+              ) : (
+                <CodeStudyViewer
+                  key={`study-${activeSnippet.id}`}
+                  code={activeSnippet.code}
+                  snippetId={snippetKey(track.id, chapter.id, activeSnippet.id)}
+                  language={track.language ?? "C++"}
+                />
+              )}
             </div>
             <Card className="flex flex-col h-full max-h-[32rem] overflow-y-auto p-5 border border-border bg-surface-elevated">
               <h3 className="text-base font-semibold text-foreground border-b border-border pb-2 mb-3">
