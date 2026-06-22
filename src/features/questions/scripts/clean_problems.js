@@ -148,108 +148,132 @@ function main() {
     console.log(`Updated ${updatedDetailsCount} entries in problems_details.json`);
   }
 
-  // 5. Generate graph_data.json
-  console.log('Generating knowledge graph data structure...');
-  const nodes = [];
-  const links = [];
-  const linkPairs = new Set();
+  // 5. Generate graph_data.json (Full) & graph_data_neetcode.json (NeetCode 150)
+  console.log('Generating knowledge graph data structures...');
+  
   const tagFrequencies = new Map();
-
-  // Helper to add link uniquely
-  function addLink(source, target, value) {
-    const key = [source, target].sort().join('::');
-    if (!linkPairs.has(key)) {
-      linkPairs.add(key);
-      links.push({ source, target, value });
-    }
-  }
-
-  // Find tag frequencies
   for (const [slug, data] of problemMetaMap.entries()) {
     for (const tag of data.tags) {
       tagFrequencies.set(tag, (tagFrequencies.get(tag) || 0) + 1);
     }
   }
 
-  // Add tag nodes
-  for (const [tag, freq] of tagFrequencies.entries()) {
-    nodes.push({
-      id: `tag:${tag}`,
-      label: tag,
-      isTag: true,
-      val: Math.max(10, Math.min(60, freq * 1.5)) // Size scale based on tag popularity
-    });
-  }
+  // --- Helper to build a graph from a subset of problems ---
+  function buildGraphForSubset(problemsSubset, filename) {
+    const subsetSlugs = new Set(problemsSubset.map(p => p.slug));
+    const nodes = [];
+    const links = [];
+    const linkPairs = new Set();
 
-  // Add problem nodes & Tag Hub Links
-  const problemsList = [];
-  for (const p of allProblems) {
-    const cleaned = problemMetaMap.get(p.slug);
-    if (!cleaned) continue;
-
-    problemsList.push({
-      slug: p.slug,
-      title: p.title,
-      difficulty: cleaned.difficulty
-    });
-
-    nodes.push({
-      id: `problem:${p.slug}`,
-      label: p.title,
-      slug: p.slug,
-      difficulty: cleaned.difficulty,
-      val: 5
-    });
-
-    // Connect problem to its tag hubs
-    for (const tag of cleaned.tags) {
-      addLink(`problem:${p.slug}`, `tag:${tag}`, 1);
-    }
-  }
-
-  // Add Difficulty Progression & Similarity Links
-  console.log('Computing similarity & progression paths...');
-  const diffScale = { easy: 1, medium: 2, hard: 3 };
-
-  for (let i = 0; i < problemsList.length; i++) {
-    const p1 = problemsList[i];
-    const cleaned1 = problemMetaMap.get(p1.slug);
-    if (!cleaned1 || cleaned1.tags.size === 0) continue;
-
-    const candidates = [];
-    for (let j = 0; j < problemsList.length; j++) {
-      if (i === j) continue;
-      const p2 = problemsList[j];
-      const cleaned2 = problemMetaMap.get(p2.slug);
-      if (!cleaned2 || cleaned2.tags.size === 0) continue;
-
-      // Calculate shared tags
-      let sharedCount = 0;
-      for (const t of cleaned1.tags) {
-        if (cleaned2.tags.has(t)) sharedCount++;
-      }
-
-      if (sharedCount > 0) {
-        const d1 = diffScale[p1.difficulty] || 2;
-        const d2 = diffScale[p2.difficulty] || 2;
-        const diffPenalty = Math.abs(d1 - d2) * 0.15;
-        const score = sharedCount - diffPenalty;
-
-        candidates.push({ slug: p2.slug, score });
+    function addLink(source, target, value) {
+      const key = [source, target].sort().join('::');
+      if (!linkPairs.has(key)) {
+        linkPairs.add(key);
+        links.push({ source, target, value });
       }
     }
 
-    // Sort by score descending and link to the top 2
-    candidates.sort((a, b) => b.score - a.score);
-    const top2 = candidates.slice(0, 2);
-    for (const cand of top2) {
-      addLink(`problem:${p1.slug}`, `problem:${cand.slug}`, 2); // value 2 indicates progression link
+    // Identify which tags are relevant to this subset
+    const subsetTags = new Set();
+    for (const p of problemsSubset) {
+      const cleaned = problemMetaMap.get(p.slug);
+      if (cleaned) {
+        for (const tag of cleaned.tags) {
+          subsetTags.add(tag);
+        }
+      }
     }
+
+    // Add tag nodes (Pruning highly frequent tags to prevent clutter, unless it's NeetCode 150 where they act as clean hubs)
+    const isNeetcodeOnly = filename.includes('neetcode');
+    for (const tag of subsetTags) {
+      const freq = tagFrequencies.get(tag) || 0;
+      // In full graph, prune tags with > 100 problems to avoid rendering giant central stars
+      if (!isNeetcodeOnly && freq > 100) continue;
+
+      nodes.push({
+        id: `tag:${tag}`,
+        label: tag,
+        isTag: true,
+        val: isNeetcodeOnly ? 30 : Math.max(12, Math.min(50, freq * 1.2))
+      });
+    }
+
+    // Add problem nodes & Tag Hub links
+    const problemsList = [];
+    for (const p of problemsSubset) {
+      const cleaned = problemMetaMap.get(p.slug);
+      if (!cleaned) continue;
+
+      problemsList.push({
+        slug: p.slug,
+        title: p.title,
+        difficulty: cleaned.difficulty,
+        tags: cleaned.tags
+      });
+
+      nodes.push({
+        id: `problem:${p.slug}`,
+        label: p.title,
+        slug: p.slug,
+        difficulty: cleaned.difficulty,
+        val: 6
+      });
+
+      // Connect problem to its tag hubs (if tag node was created)
+      const createdTags = new Set(nodes.filter(n => n.isTag).map(n => n.label));
+      for (const tag of cleaned.tags) {
+        if (createdTags.has(tag)) {
+          addLink(`problem:${p.slug}`, `tag:${tag}`, 1);
+        }
+      }
+    }
+
+    // Add progression & similarity links between problems
+    const diffScale = { easy: 1, medium: 2, hard: 3 };
+    for (let i = 0; i < problemsList.length; i++) {
+      const p1 = problemsList[i];
+      const candidates = [];
+
+      for (let j = 0; j < problemsList.length; j++) {
+        if (i === j) continue;
+        const p2 = problemsList[j];
+
+        // Shared tags count
+        let sharedCount = 0;
+        for (const t of p1.tags) {
+          if (p2.tags.has(t)) sharedCount++;
+        }
+
+        if (sharedCount > 0) {
+          const d1 = diffScale[p1.difficulty] || 2;
+          const d2 = diffScale[p2.difficulty] || 2;
+          const diffPenalty = Math.abs(d1 - d2) * 0.15;
+          const score = sharedCount - diffPenalty;
+          candidates.push({ slug: p2.slug, score });
+        }
+      }
+
+      // Sort and take top 2 candidates to link
+      candidates.sort((a, b) => b.score - a.score);
+      const top2 = candidates.slice(0, 2);
+      for (const cand of top2) {
+        addLink(`problem:${p1.slug}`, `problem:${cand.slug}`, 2);
+      }
+    }
+
+    const graphData = { nodes, links };
+    const filePath = path.join(DATA_DIR, filename);
+    fs.writeFileSync(filePath, JSON.stringify(graphData, null, 2), 'utf8');
+    console.log(`Successfully generated ${filename} with ${nodes.length} nodes and ${links.length} links.`);
   }
 
-  const graphData = { nodes, links };
-  fs.writeFileSync(GRAPH_DATA_PATH, JSON.stringify(graphData, null, 2), 'utf8');
-  console.log(`Successfully generated graph_data.json with ${nodes.length} nodes and ${links.length} links.`);
+  // 5a. Build full graph (with pruned links/hubs)
+  buildGraphForSubset(allProblems, 'graph_data.json');
+
+  // 5b. Build NeetCode 150 graph
+  const neetcodeProblemsSubset = allProblems.filter(p => neetcodeMap.has(p.slug));
+  buildGraphForSubset(neetcodeProblemsSubset, 'graph_data_neetcode.json');
 }
 
 main();
