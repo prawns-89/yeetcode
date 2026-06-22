@@ -1,5 +1,5 @@
-import { ModeCard } from "@/components/dashboard/ModeCard";
-import { RecentSessionsTable } from "@/components/dashboard/RecentSessionsTable";
+import { ModeCard } from "@/features/dashboard/components/ModeCard";
+import { RecentSessionsTable } from "@/features/dashboard/components/RecentSessionsTable";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";

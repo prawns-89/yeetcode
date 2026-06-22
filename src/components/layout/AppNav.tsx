@@ -7,7 +7,7 @@ import { Keyboard, LayoutDashboard, List, User } from "lucide-react";
 import { mainNav } from "@/constants/navigation";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/cn";
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "@/lib/userStore";
 
 const iconMap = {
   "layout-dashboard": LayoutDashboard,

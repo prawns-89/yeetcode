@@ -40,6 +40,43 @@ function refreshMetrics(state: TypingSessionState): TypingSessionState {
   };
 }
 
+export function handleTypingTab(
+  state: TypingSessionState,
+): TypingSessionState {
+  if (state.isComplete) return state;
+
+  // Count how many consecutive spaces follow the cursor (max 4)
+  let spacesToConsume = 0;
+  while (
+    spacesToConsume < 4 &&
+    state.source[state.cursor + spacesToConsume] === " "
+  ) {
+    spacesToConsume++;
+  }
+
+  // If cursor is not on a space, Tab does nothing
+  if (spacesToConsume === 0) return state;
+
+  const startedAt = state.startedAt ?? Date.now();
+  const statuses = [...state.statuses];
+  for (let i = 0; i < spacesToConsume; i++) {
+    statuses[state.cursor + i] = "correct";
+  }
+
+  const cursor = state.cursor + spacesToConsume;
+  const isComplete = cursor >= state.source.length;
+  const finishedAt = isComplete ? Date.now() : state.finishedAt;
+
+  return refreshMetrics({
+    ...state,
+    statuses,
+    cursor,
+    startedAt,
+    finishedAt,
+    isComplete,
+  });
+}
+
 export function handleTypingKey(
   state: TypingSessionState,
   key: string,

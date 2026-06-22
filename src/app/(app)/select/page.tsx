@@ -1,4 +1,4 @@
-import { ModeCard } from "@/components/dashboard/ModeCard";
+import { ModeCard } from "@/features/dashboard/components/ModeCard";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { getTotalSnippetCount } from "@/features/algorithms/constants/tracks";
 import { problems } from "@/features/questions/data/problems_client";

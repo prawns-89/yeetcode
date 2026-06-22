@@ -5,6 +5,7 @@ import {
   createTypingSession,
   handleTypingBackspace,
   handleTypingKey,
+  handleTypingTab,
   resetTypingSession,
   tickTypingSession,
   toSessionResult,
@@ -67,6 +68,12 @@ export function useTypingSession(
         setSession(resetTypingSession(source));
         setShowResult(false);
         reportedComplete.current = false;
+        return;
+      }
+
+      if (event.key === "Tab") {
+        event.preventDefault();
+        setSession((current) => handleTypingTab(current));
         return;
       }
 

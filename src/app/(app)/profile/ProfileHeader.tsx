@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/Card";
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "@/lib/userStore";
 
 export function ProfileHeader() {
   const [mounted, setMounted] = useState(false);
