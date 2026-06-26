@@ -49,3 +49,24 @@ model SnippetNote {
 
   @@unique([snippetId, lineIndex])
 }
+
+model DailyQuest {
+  id          String    @id @default(cuid())
+  date        String    // YYYY-MM-DD
+  category    String    // NeetCode island category
+  problemSlug String
+  position    Int       // 1-5, order within today's quest
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+
+  @@unique([date, category, problemSlug])
+  @@index([date, category])
+}
+
+model IslandProgress {
+  category         String   @id  // NeetCode island category
+  totalClears      Int      @default(0)  // full 5/5 days
+  totalCompleted   Int      @default(0)  // individual problems done ever
+  currentStreak    Int      @default(0)
+  lastClearedDate  String?  // YYYY-MM-DD of last full clear
+}

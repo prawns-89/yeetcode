@@ -5,9 +5,10 @@ import { getProblemBySlug } from "@/features/questions/data/problems_server";
 
 interface QuestionPageProps {
   params: { slug: string };
+  searchParams: { questId?: string };
 }
 
-export default function QuestionPage({ params }: QuestionPageProps) {
+export default function QuestionPage({ params, searchParams }: QuestionPageProps) {
   const problem = getProblemBySlug(params.slug);
 
   if (!problem) {
@@ -21,6 +22,7 @@ export default function QuestionPage({ params }: QuestionPageProps) {
         slug={problem.slug}
         title={problem.title}
         code={problem.solutionCode}
+        questId={searchParams.questId}
       />
     </div>
   );

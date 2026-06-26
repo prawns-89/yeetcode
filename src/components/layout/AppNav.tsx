@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Keyboard, LayoutDashboard, List, User } from "lucide-react";
+import { Keyboard, LayoutDashboard, List, Map, User } from "lucide-react";
 import { mainNav } from "@/constants/navigation";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/cn";
@@ -13,6 +13,7 @@ const iconMap = {
   "layout-dashboard": LayoutDashboard,
   keyboard: Keyboard,
   list: List,
+  map: Map,
   user: User,
 } as const;
 

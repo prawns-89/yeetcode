@@ -9,5 +9,6 @@ export const routes = {
     `/algorithms/${track}/${chapter}`,
   questions: "/questions",
   question: (slug: string) => `/questions/${slug}`,
+  islands: "/islands",
   profile: "/profile",
 } as const;
