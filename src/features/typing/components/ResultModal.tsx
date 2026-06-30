@@ -9,6 +9,7 @@ interface ResultModalProps {
   result: TypingSessionResult;
   isPersonalBest?: boolean;
   onRetry: () => void;
+  onNext?: () => void;
   onClose: () => void;
 }
 
@@ -17,6 +18,7 @@ export function ResultModal({
   result,
   isPersonalBest = false,
   onRetry,
+  onNext,
   onClose,
 }: ResultModalProps) {
   if (!open) return null;
@@ -68,7 +70,17 @@ export function ResultModal({
           <Button variant="ghost" onClick={onClose}>
             Close
           </Button>
-          <Button onClick={onRetry}>Try again</Button>
+          <Button
+            onClick={onRetry}
+            variant={onNext ? "secondary" : "primary"}
+          >
+            Try again
+          </Button>
+          {onNext ? (
+            <Button onClick={onNext} variant="primary">
+              Next snippet
+            </Button>
+          ) : null}
         </div>
       </Card>
     </div>

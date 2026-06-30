@@ -51,10 +51,11 @@ export function ChapterSession({
     chapter.snippets[0]?.id ?? "",
   );
 
-  const activeSnippet = useMemo(
-    () => chapter.snippets.find((snippet) => snippet.id === activeSnippetId),
-    [chapter.snippets, activeSnippetId],
+  const activeSnippetIndex = chapter.snippets.findIndex(
+    (snippet) => snippet.id === activeSnippetId,
   );
+  const activeSnippet = chapter.snippets[activeSnippetIndex];
+  const nextSnippet = chapter.snippets[activeSnippetIndex + 1];
 
   const handleComplete = async (result: TypingSessionResult) => {
     if (!activeSnippet) return null;
@@ -166,6 +167,11 @@ export function ChapterSession({
                   code={activeSnippet.code}
                   language={track.language ?? "C++"}
                   onComplete={handleComplete}
+                  onNext={
+                    nextSnippet
+                      ? () => setActiveSnippetId(nextSnippet.id)
+                      : undefined
+                  }
                 />
               ) : (
                 <CodeStudyViewer
