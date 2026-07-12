@@ -70,3 +70,13 @@ model IslandProgress {
   currentStreak    Int      @default(0)
   lastClearedDate  String?  // YYYY-MM-DD of last full clear
 }
+
+model GithubSettings {
+  id        String   @id @default("default")
+  enabled   Boolean  @default(false)
+  token     String
+  username  String
+  repoName  String
+  updatedAt DateTime @updatedAt
+}
+

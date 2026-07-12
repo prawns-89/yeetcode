@@ -18,7 +18,7 @@ export function useSaveSession() {
         return null;
       }
 
-      return response.json() as Promise<{ isPersonalBest: boolean }>;
+      return response.json() as Promise<{ isPersonalBest: boolean; isFirstClear: boolean }>;
     } catch (error) {
       console.error("Failed to save session", error);
       return null;

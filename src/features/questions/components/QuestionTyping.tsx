@@ -19,12 +19,32 @@ export function QuestionTyping({ slug, title, code, questId }: QuestionTypingPro
   const [sessionMode, setSessionMode] = useState<"typing" | "study">("typing");
 
   const handleComplete = async (result: TypingSessionResult) => {
-    await saveFromTypingResult(result, {
+    const saveResult = await saveFromTypingResult(result, {
       snippetId: `questions/${slug}`,
       snippetTitle: title,
       mode: "questions",
       errors: result.errors,
     });
+
+    if (saveResult?.isFirstClear) {
+      try {
+        fetch("/api/github/commit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            snippetId: `questions/${slug}`,
+            snippetTitle: title,
+            code: code,
+            netWpm: result.netWpm,
+            accuracy: result.accuracy,
+          }),
+        }).catch((err) => {
+          console.error("Failed to commit to GitHub", err);
+        });
+      } catch (err) {
+        console.error("Failed to commit to GitHub", err);
+      }
+    }
 
     // Mark quest problem complete if this session came from an island raid
     if (questId) {

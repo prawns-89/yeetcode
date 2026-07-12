@@ -69,5 +69,6 @@ export async function saveTypingSession(input: SaveSessionInput) {
     });
   }
 
-  return { session, isPersonalBest };
+  return { session, isPersonalBest, isFirstClear: !existingProgress };
 }
+

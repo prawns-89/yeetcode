@@ -21,8 +21,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid input" }, { status: 400 });
     }
 
-    const { isPersonalBest } = await saveTypingSession(input);
-    return NextResponse.json({ success: true, isPersonalBest });
+    const { isPersonalBest, isFirstClear } = await saveTypingSession(input);
+    return NextResponse.json({ success: true, isPersonalBest, isFirstClear });
   } catch (error) {
     console.error("Session save error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

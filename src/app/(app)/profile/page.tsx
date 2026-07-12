@@ -1,6 +1,7 @@
 import { ProfileHeader } from "./ProfileHeader";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
+import { GithubSettings } from "@/components/GithubSettings";
 import { formatAttemptedAt } from "@/features/sessions/lib/format";
 import {
   getPersonalBests,
@@ -47,6 +48,11 @@ export default async function ProfilePage() {
           </div>
         </Card>
       </div>
+
+      <div className="mt-6">
+        <GithubSettings />
+      </div>
+
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
         <Card>
