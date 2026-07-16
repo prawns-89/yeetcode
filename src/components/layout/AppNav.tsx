@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Keyboard, LayoutDashboard, List, Map, User } from "lucide-react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Brain, Keyboard, LayoutDashboard, List, Map, Target, User } from "lucide-react";
 import { mainNav } from "@/constants/navigation";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/cn";
@@ -13,12 +13,15 @@ const iconMap = {
   "layout-dashboard": LayoutDashboard,
   keyboard: Keyboard,
   list: List,
+  brain: Brain,
+  target: Target,
   map: Map,
   user: User,
 } as const;
 
 export function AppNav() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [mounted, setMounted] = useState(false);
   const username = useUserStore((s) => s.username);
   
@@ -48,7 +51,14 @@ export function AppNav() {
               const isActive =
                 item.href === routes.dashboard
                   ? pathname === routes.dashboard
-                  : pathname.startsWith(item.href);
+                  : item.href.includes("?")
+                    ? pathname === item.href.split("?")[0] &&
+                      (item.href.includes("playlist=dp50")
+                        ? searchParams.get("playlist") === "dp50"
+                        : searchParams.get("playlist") === "google-oa")
+                    : pathname.startsWith(item.href) &&
+                      searchParams.get("playlist") !== "dp50" &&
+                      searchParams.get("playlist") !== "google-oa";
 
               return (
                 <Link
