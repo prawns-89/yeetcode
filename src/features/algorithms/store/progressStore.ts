@@ -24,6 +24,8 @@ interface ProgressState {
     completedSnippets: string[];
     snippetStats: Record<string, SnippetAttempt>;
   }) => void;
+  /** Cheat code: marks every snippet in a track as 100% complete. */
+  bulkUnlockTrack: (track: import("@/features/algorithms/types").AlgorithmTrack) => void;
 }
 
 export const useProgressStore = create<ProgressState>()(
@@ -58,6 +60,21 @@ export const useProgressStore = create<ProgressState>()(
             snippetStats: data.snippetStats,
             hydrated: true,
           });
+        },
+        bulkUnlockTrack: (track) => {
+          const newKeys: string[] = [];
+          const newStats: Record<string, SnippetAttempt> = {};
+          for (const chapter of track.chapters) {
+            for (const snippet of chapter.snippets) {
+              const key = snippetKey(track.id, chapter.id, snippet.id);
+              newKeys.push(key);
+              newStats[key] = { completedAt: new Date().toISOString(), netWpm: 120, accuracy: 100 };
+            }
+          }
+          set((state) => ({
+            completedSnippets: Array.from(new Set([...state.completedSnippets, ...newKeys])),
+            snippetStats: { ...state.snippetStats, ...newStats },
+          }));
         },
       }),
       { name: "codetype-algorithm-progress" },

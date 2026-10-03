@@ -1,0 +1,560 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Island Archipelago — Terminal UI Styles
+   Font: JetBrains Mono (loaded via next/font or CDN in layout)
+   Color families: blue-steel | amber | green | violet | slate
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Color tokens ── */
+:root {
+  --island-blue-border:   hsl(210, 60%, 55%);
+  --island-blue-text:     hsl(210, 70%, 75%);
+  --island-blue-bg:       hsl(210, 40%, 10%);
+
+  --island-amber-border:  hsl(38, 80%, 52%);
+  --island-amber-text:    hsl(38, 90%, 72%);
+  --island-amber-bg:      hsl(38, 40%, 9%);
+
+  --island-green-border:  hsl(145, 55%, 42%);
+  --island-green-text:    hsl(145, 60%, 65%);
+  --island-green-bg:      hsl(145, 30%, 8%);
+
+  --island-violet-border: hsl(265, 55%, 58%);
+  --island-violet-text:   hsl(265, 70%, 78%);
+  --island-violet-bg:     hsl(265, 30%, 10%);
+
+  --island-slate-border:  hsl(220, 20%, 46%);
+  --island-slate-text:    hsl(220, 20%, 70%);
+  --island-slate-bg:      hsl(220, 15%, 9%);
+
+  --island-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  --island-grid-color: rgba(255,255,255,0.035);
+}
+
+/* ── Page root ── */
+.islands-root {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 3.5rem); /* subtract nav height */
+  background: #0d1117;
+  font-family: var(--island-mono);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Status bar ── */
+.islands-statusbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: #10141c;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: #4b5563;
+  flex-shrink: 0;
+}
+
+.islands-statusbar-item {
+  color: #6b7280;
+}
+
+.islands-statusbar-active {
+  color: var(--island-blue-text);
+  font-weight: 600;
+}
+
+.islands-statusbar-idle {
+  color: #374151;
+  font-style: italic;
+}
+
+.islands-statusbar-idle code {
+  color: #6b7280;
+  font-style: normal;
+}
+
+.islands-statusbar-sep {
+  color: #1f2937;
+}
+
+.islands-statusbar-date {
+  margin-left: auto;
+  color: #374151;
+}
+
+/* ── Map canvas ── */
+.islands-canvas-wrap {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.islands-canvas {
+  position: relative;
+  width: 100%;
+  min-width: 900px;
+  height: 100%;
+  min-height: 600px;
+  /* Subtle grid */
+  background-image:
+    linear-gradient(var(--island-grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--island-grid-color) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── SVG connection lines ── */
+.islands-connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.islands-connections line {
+  stroke: rgba(255,255,255,0.06);
+  stroke-width: 1;
+  stroke-dasharray: 4 8;
+}
+
+/* ── Island nodes ── */
+.island-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 140px;
+  padding: 0.45rem 0.7rem 0.4rem;
+  border: 1px solid;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, opacity 120ms ease;
+  font-family: var(--island-mono);
+}
+
+/* Color variants */
+.island-node--blue   { border-color: hsl(210, 60%, 30%); color: var(--island-blue-text); }
+.island-node--amber  { border-color: hsl(38, 80%, 28%);  color: var(--island-amber-text); }
+.island-node--green  { border-color: hsl(145, 55%, 22%); color: var(--island-green-text); }
+.island-node--violet { border-color: hsl(265, 55%, 30%); color: var(--island-violet-text); }
+.island-node--slate  { border-color: hsl(220, 20%, 22%); color: var(--island-slate-text); }
+
+/* Hover — bring border to full color */
+.island-node--blue:hover   { border-color: var(--island-blue-border);   background: var(--island-blue-bg); }
+.island-node--amber:hover  { border-color: var(--island-amber-border);  background: var(--island-amber-bg); }
+.island-node--green:hover  { border-color: var(--island-green-border);  background: var(--island-green-bg); }
+.island-node--violet:hover { border-color: var(--island-violet-border); background: var(--island-violet-bg); }
+.island-node--slate:hover  { border-color: var(--island-slate-border);  background: var(--island-slate-bg); }
+
+/* Active today */
+.island-node--active.island-node--blue   { border-color: var(--island-blue-border);   border-width: 2px; background: var(--island-blue-bg); }
+.island-node--active.island-node--amber  { border-color: var(--island-amber-border);  border-width: 2px; background: var(--island-amber-bg); }
+.island-node--active.island-node--green  { border-color: var(--island-green-border);  border-width: 2px; background: var(--island-green-bg); }
+.island-node--active.island-node--violet { border-color: var(--island-violet-border); border-width: 2px; background: var(--island-violet-bg); }
+.island-node--active.island-node--slate  { border-color: var(--island-slate-border);  border-width: 2px; background: var(--island-slate-bg); }
+
+/* Cleared today */
+.island-node--cleared { opacity: 0.7; }
+
+/* Never visited */
+.island-node--unvisited { opacity: 0.38; }
+.island-node--unvisited:hover { opacity: 0.7; }
+
+/* Node internals */
+.island-node-cursor {
+  font-size: 0.65rem;
+  margin-right: 0.3rem;
+  opacity: 0.9;
+}
+
+.island-node-cleared-mark {
+  font-size: 0.65rem;
+  margin-right: 0.3rem;
+  color: hsl(145, 60%, 55%);
+}
+
+.island-node-label {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.island-node-stats {
+  display: block;
+  font-size: 0.58rem;
+  margin-top: 0.15rem;
+  opacity: 0.6;
+  letter-spacing: 0.02em;
+}
+
+.island-node-progress {
+  color: inherit;
+}
+
+.island-node-clears {
+  color: inherit;
+}
+
+/* ── Island panel ── */
+.island-panel {
+  position: fixed;
+  top: 3.5rem; /* below nav */
+  right: 0;
+  bottom: 0;
+  width: min(420px, 100vw);
+  background: #10141c;
+  border-left: 1px solid rgba(255,255,255,0.08);
+  overflow-y: auto;
+  z-index: 50;
+  font-family: var(--island-mono);
+  display: flex;
+  flex-direction: column;
+}
+
+.island-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 1rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.island-panel-category {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4b5563;
+  margin-bottom: 0.2rem;
+}
+
+.island-panel-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #e5e7eb;
+  margin: 0;
+}
+
+.island-panel-meta {
+  font-size: 0.6rem;
+  color: #4b5563;
+  margin-top: 0.4rem;
+  letter-spacing: 0.03em;
+}
+
+/* Panel color accents */
+.island-panel--blue   .island-panel-title { color: var(--island-blue-text); }
+.island-panel--amber  .island-panel-title { color: var(--island-amber-text); }
+.island-panel--green  .island-panel-title { color: var(--island-green-text); }
+.island-panel--violet .island-panel-title { color: var(--island-violet-text); }
+.island-panel--slate  .island-panel-title { color: var(--island-slate-text); }
+
+.island-panel--blue   { border-left-color: hsl(210, 60%, 30%); }
+.island-panel--amber  { border-left-color: hsl(38, 80%, 28%); }
+.island-panel--green  { border-left-color: hsl(145, 55%, 22%); }
+.island-panel--violet { border-left-color: hsl(265, 55%, 30%); }
+.island-panel--slate  { border-left-color: hsl(220, 20%, 22%); }
+
+.island-panel-close {
+  background: none;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0.1rem 0.3rem;
+  line-height: 1;
+  transition: color 100ms;
+}
+.island-panel-close:hover { color: #9ca3af; }
+
+/* Panel sections */
+.island-panel-section {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.island-panel-section-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #374151;
+  margin-bottom: 0.6rem;
+}
+
+/* Problems list */
+.island-panel-problems {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.island-panel-problem {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto auto;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.68rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: #9ca3af;
+}
+
+.island-panel-problem--done {
+  opacity: 0.45;
+  text-decoration: line-through;
+  text-decoration-color: rgba(255,255,255,0.2);
+}
+
+.island-panel-problem-num {
+  color: #374151;
+  letter-spacing: 0.04em;
+}
+
+.island-panel-problem-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #d1d5db;
+}
+
+.island-panel-problem-diff {
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.3rem;
+  border: 1px solid currentColor;
+  opacity: 0.7;
+}
+
+.island-panel-problem-diff--easy   { color: hsl(145, 60%, 50%); }
+.island-panel-problem-diff--medium { color: hsl(38, 90%, 60%); }
+.island-panel-problem-diff--hard   { color: hsl(0, 70%, 60%); }
+
+.island-panel-type-link {
+  color: #4b5563;
+  text-decoration: none;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition: color 100ms;
+}
+.island-panel-type-link:hover { color: #9ca3af; }
+
+.island-panel-checkmark {
+  color: hsl(145, 60%, 50%);
+  font-size: 0.7rem;
+}
+
+/* Raid / locked / choose */
+.island-panel-choose,
+.island-panel-locked {
+  font-size: 0.68rem;
+  color: #6b7280;
+}
+
+.island-panel-choose-sub {
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.island-panel-raid-btn {
+  background: none;
+  border: 1px solid #374151;
+  color: #9ca3af;
+  font-family: var(--island-mono);
+  font-size: 0.7rem;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: border-color 120ms, color 120ms;
+}
+.island-panel-raid-btn:hover:not(:disabled) { border-color: #6b7280; color: #d1d5db; }
+.island-panel-raid-btn:disabled { opacity: 0.4; cursor: default; }
+
+.island-panel-locked-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: hsl(38, 70%, 45%);
+  margin-bottom: 0.4rem;
+}
+
+.island-panel-locked-msg {
+  color: #4b5563;
+  margin-bottom: 0.25rem;
+}
+
+.island-panel-locked-until {
+  color: #374151;
+  font-size: 0.62rem;
+}
+
+/* References */
+.island-panel-refs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.island-panel-ref-link {
+  font-size: 0.65rem;
+  color: #4b5563;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 100ms;
+}
+.island-panel-ref-link:hover { color: #9ca3af; text-decoration: underline; }
+
+/* Patterns */
+.island-panel-patterns {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.island-panel-pattern {
+  font-size: 0.6rem;
+  color: #4b5563;
+  border: 1px solid #1f2937;
+  padding: 0.15rem 0.4rem;
+  letter-spacing: 0.04em;
+}
+
+/* ── Command palette ── */
+.command-palette {
+  position: relative;
+  flex-shrink: 0;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  background: #0d1117;
+  z-index: 40;
+}
+
+.command-output {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.command-output-line {
+  font-size: 0.68rem;
+  color: #6b7280;
+  line-height: 1.7;
+  white-space: pre;
+  font-family: var(--island-mono);
+}
+
+.command-output-error {
+  font-size: 0.68rem;
+  color: hsl(0, 60%, 55%);
+  font-family: var(--island-mono);
+}
+
+.command-island-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.1rem;
+}
+
+.command-island-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-family: var(--island-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: color 100ms;
+}
+.command-island-item:hover { color: #d1d5db; }
+
+.command-island-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.command-island-dot--blue   { background: var(--island-blue-border); }
+.command-island-dot--amber  { background: var(--island-amber-border); }
+.command-island-dot--green  { background: var(--island-green-border); }
+.command-island-dot--violet { background: var(--island-violet-border); }
+.command-island-dot--slate  { background: var(--island-slate-border); }
+
+.command-suggestions {
+  list-style: none;
+  padding: 0.3rem 1rem;
+  margin: 0;
+  display: flex;
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.command-suggestion {
+  font-size: 0.62rem;
+  color: #374151;
+  font-family: var(--island-mono);
+  letter-spacing: 0.04em;
+}
+
+.command-input-row {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  gap: 0.6rem;
+}
+
+.command-prompt {
+  color: hsl(145, 55%, 42%);
+  font-family: var(--island-mono);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.command-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--island-mono);
+  font-size: 0.72rem;
+  color: #d1d5db;
+  caret-color: hsl(145, 55%, 42%);
+  letter-spacing: 0.02em;
+}
+
+.command-input::placeholder {
+  color: #1f2937;
+}
+
+.command-loading {
+  font-size: 0.65rem;
+  color: #374151;
+  font-family: var(--island-mono);
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}

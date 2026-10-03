@@ -11,12 +11,14 @@ interface TypingCanvasProps {
   code: string;
   language?: string;
   onComplete?: (result: TypingSessionResult) => Promise<{ isPersonalBest?: boolean } | null | void>;
+  onNext?: () => void;
 }
 
 export function TypingCanvas({
   code,
   language = "C++",
   onComplete,
+  onNext,
 }: TypingCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isPersonalBest, setIsPersonalBest] = useState(false);
@@ -43,6 +45,12 @@ export function TypingCanvas({
   const handleClose = () => {
     setIsPersonalBest(false);
     dismissResult();
+  };
+
+  const handleNext = () => {
+    setIsPersonalBest(false);
+    dismissResult();
+    if (onNext) onNext();
   };
 
   const { metrics } = session;
@@ -87,6 +95,7 @@ export function TypingCanvas({
         result={result}
         isPersonalBest={isPersonalBest}
         onRetry={handleReset}
+        onNext={onNext ? handleNext : undefined}
         onClose={handleClose}
       />
     </>

@@ -1,0 +1,402 @@
+[
+  {
+    "slug": "longest-common-subsequence",
+    "number": 1143,
+    "title": "Longest Common Subsequence",
+    "difficulty": "medium",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-common-subsequence-2",
+    "number": 4001,
+    "title": "Longest Common Subsequence (Variant)",
+    "difficulty": "medium",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-common-substring",
+    "number": 4002,
+    "title": "Longest Common Substring",
+    "difficulty": "medium",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-palindromic-subsequence",
+    "number": 516,
+    "title": "Longest Palindromic Subsequence",
+    "difficulty": "medium",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-repeated-subsequence",
+    "number": 4003,
+    "title": "Longest Repeated Subsequence",
+    "difficulty": "medium",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "diff-utility",
+    "number": 4004,
+    "title": "Implement Diff Utility",
+    "difficulty": "medium",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "shortest-common-supersequence",
+    "number": 1092,
+    "title": "Shortest Common Supersequence",
+    "difficulty": "hard",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "shortest-common-supersequence-2",
+    "number": 4005,
+    "title": "Shortest Common Supersequence (Variant)",
+    "difficulty": "medium",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-increasing-subsequence",
+    "number": 300,
+    "title": "Longest Increasing Subsequence",
+    "difficulty": "medium",
+    "category": "LIS",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-bitonic-subsequence",
+    "number": 4006,
+    "title": "Longest Bitonic Subsequence",
+    "difficulty": "medium",
+    "category": "LIS",
+    "hasSolution": true
+  },
+  {
+    "slug": "increasing-subsequence-with-maximum-sum",
+    "number": 4007,
+    "title": "Increasing Subsequence with Maximum Sum",
+    "difficulty": "medium",
+    "category": "LIS",
+    "hasSolution": true
+  },
+  {
+    "slug": "edit-distance",
+    "number": 72,
+    "title": "Edit Distance",
+    "difficulty": "hard",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "maximal-square",
+    "number": 221,
+    "title": "Maximal Square",
+    "difficulty": "medium",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "matrix-chain-multiplication",
+    "number": 4008,
+    "title": "Matrix Chain Multiplication",
+    "difficulty": "medium",
+    "category": "Interval DP",
+    "hasSolution": true
+  },
+  {
+    "slug": "minimum-path-sum",
+    "number": 64,
+    "title": "Minimum Path Sum",
+    "difficulty": "medium",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-increasing-path-in-a-matrix",
+    "number": 329,
+    "title": "Longest Increasing Path in a Matrix",
+    "difficulty": "medium",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "count-paths-in-matrix-with-given-cost",
+    "number": 4009,
+    "title": "Count Paths in Matrix with Given Cost",
+    "difficulty": "medium",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "zero-one-knapsack",
+    "number": 4010,
+    "title": "0-1 Knapsack Problem",
+    "difficulty": "medium",
+    "category": "Knapsack",
+    "hasSolution": true
+  },
+  {
+    "slug": "maximize-expression-value",
+    "number": 4011,
+    "title": "Maximize Value of Expression",
+    "difficulty": "medium",
+    "category": "LIS",
+    "hasSolution": true
+  },
+  {
+    "slug": "partition-equal-subset-sum",
+    "number": 416,
+    "title": "Partition Equal Subset Sum",
+    "difficulty": "medium",
+    "category": "Knapsack",
+    "hasSolution": true
+  },
+  {
+    "slug": "subset-sum",
+    "number": 4012,
+    "title": "Subset Sum Problem",
+    "difficulty": "medium",
+    "category": "Knapsack",
+    "hasSolution": true
+  },
+  {
+    "slug": "minimum-sum-partition",
+    "number": 4013,
+    "title": "Minimum Sum Partition Problem",
+    "difficulty": "medium",
+    "category": "Knapsack",
+    "hasSolution": true
+  },
+  {
+    "slug": "binary-strings-no-consecutive-1s",
+    "number": 4014,
+    "title": "Binary Strings without Consecutive 1s",
+    "difficulty": "medium",
+    "category": "Combinatorics",
+    "hasSolution": true
+  },
+  {
+    "slug": "rod-cutting",
+    "number": 4015,
+    "title": "Rod Cutting Problem",
+    "difficulty": "medium",
+    "category": "Knapsack",
+    "hasSolution": true
+  },
+  {
+    "slug": "integer-break",
+    "number": 343,
+    "title": "Integer Break",
+    "difficulty": "medium",
+    "category": "Knapsack",
+    "hasSolution": true
+  },
+  {
+    "slug": "coin-change",
+    "number": 322,
+    "title": "Coin Change",
+    "difficulty": "medium",
+    "category": "Knapsack",
+    "hasSolution": true
+  },
+  {
+    "slug": "coin-change-ii",
+    "number": 518,
+    "title": "Coin Change II",
+    "difficulty": "medium",
+    "category": "Knapsack",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-alternating-subsequence",
+    "number": 4016,
+    "title": "Longest Alternating Subsequence",
+    "difficulty": "medium",
+    "category": "LIS",
+    "hasSolution": true
+  },
+  {
+    "slug": "distinct-subsequences",
+    "number": 115,
+    "title": "Distinct Subsequences",
+    "difficulty": "hard",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "cherry-pickup",
+    "number": 741,
+    "title": "Cherry Pickup",
+    "difficulty": "hard",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "knight-dialer",
+    "number": 935,
+    "title": "Knight Dialer",
+    "difficulty": "medium",
+    "category": "Graph DP",
+    "hasSolution": true
+  },
+  {
+    "slug": "optimal-bst",
+    "number": 4017,
+    "title": "Optimal Binary Search Tree",
+    "difficulty": "hard",
+    "category": "Interval DP",
+    "hasSolution": true
+  },
+  {
+    "slug": "word-break",
+    "number": 139,
+    "title": "Word Break",
+    "difficulty": "medium",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "word-break-ii",
+    "number": 140,
+    "title": "Word Break II",
+    "difficulty": "hard",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "linear-equation-solutions",
+    "number": 4018,
+    "title": "Linear Equation Solutions",
+    "difficulty": "medium",
+    "category": "Combinatorics",
+    "hasSolution": true
+  },
+  {
+    "slug": "wildcard-matching",
+    "number": 44,
+    "title": "Wildcard Matching",
+    "difficulty": "hard",
+    "category": "Strings",
+    "hasSolution": true
+  },
+  {
+    "slug": "out-of-boundary-paths",
+    "number": 576,
+    "title": "Out of Boundary Paths",
+    "difficulty": "medium",
+    "category": "Probability",
+    "hasSolution": true
+  },
+  {
+    "slug": "range-sum-query-2d-immutable",
+    "number": 4019,
+    "title": "Sub-matrix Sum in Constant Time",
+    "difficulty": "medium",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "max-sum-of-rectangle-no-larger-than-k",
+    "number": 363,
+    "title": "Max Sum of Rectangle No Larger Than K",
+    "difficulty": "hard",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "max-sum-of-rectangle-no-larger-than-k-2",
+    "number": 4020,
+    "title": "Find Maximum Sum Submatrix (Variant)",
+    "difficulty": "hard",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "house-robber",
+    "number": 198,
+    "title": "House Robber",
+    "difficulty": "medium",
+    "category": "LIS",
+    "hasSolution": true
+  },
+  {
+    "slug": "maximum-subarray",
+    "number": 53,
+    "title": "Maximum Subarray",
+    "difficulty": "medium",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "bellman-ford",
+    "number": 4021,
+    "title": "Bellman Ford Algorithm",
+    "difficulty": "medium",
+    "category": "Graph DP",
+    "hasSolution": true
+  },
+  {
+    "slug": "floyd-warshall",
+    "number": 4022,
+    "title": "Floyd Warshall Algorithm",
+    "difficulty": "medium",
+    "category": "Graph DP",
+    "hasSolution": true
+  },
+  {
+    "slug": "predict-the-winner",
+    "number": 486,
+    "title": "Predict the Winner",
+    "difficulty": "medium",
+    "category": "Interval DP",
+    "hasSolution": true
+  },
+  {
+    "slug": "palindrome-partitioning-ii",
+    "number": 132,
+    "title": "Palindrome Partitioning II",
+    "difficulty": "hard",
+    "category": "Interval DP",
+    "hasSolution": true
+  },
+  {
+    "slug": "max-length-snake-sequence",
+    "number": 4023,
+    "title": "Maximum Length Snake Sequence",
+    "difficulty": "medium",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "partition-to-k-equal-sum-subsets",
+    "number": 698,
+    "title": "Partition to K Equal Sum Subsets",
+    "difficulty": "medium",
+    "category": "Knapsack",
+    "hasSolution": true
+  },
+  {
+    "slug": "largest-1-bordered-square",
+    "number": 1139,
+    "title": "Largest 1-Bordered Square",
+    "difficulty": "medium",
+    "category": "Matrix",
+    "hasSolution": true
+  },
+  {
+    "slug": "interleaving-string",
+    "number": 97,
+    "title": "Interleaving String",
+    "difficulty": "medium",
+    "category": "Strings",
+    "hasSolution": true
+  }
+]

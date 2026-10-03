@@ -1,0 +1,394 @@
+[
+  {
+    "slug": "alien-dictionary",
+    "number": 269,
+    "title": "Alien Dictionary",
+    "difficulty": "hard",
+    "category": "Graphs",
+    "hasSolution": true
+  },
+  {
+    "slug": "evaluate-division",
+    "number": 399,
+    "title": "Evaluate Division",
+    "difficulty": "medium",
+    "category": "Graphs",
+    "hasSolution": true
+  },
+  {
+    "slug": "course-schedule-ii",
+    "number": 210,
+    "title": "Course Schedule II",
+    "difficulty": "medium",
+    "category": "Graphs",
+    "hasSolution": true
+  },
+  {
+    "slug": "reconstruct-itinerary",
+    "number": 332,
+    "title": "Reconstruct Itinerary",
+    "difficulty": "hard",
+    "category": "Graphs",
+    "hasSolution": true
+  },
+  {
+    "slug": "is-graph-bipartite",
+    "number": 785,
+    "title": "Is Graph Bipartite",
+    "difficulty": "medium",
+    "category": "Graphs",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-string-chain",
+    "number": 1048,
+    "title": "Longest String Chain",
+    "difficulty": "medium",
+    "category": "Graphs",
+    "hasSolution": true
+  },
+  {
+    "slug": "number-of-islands-ii",
+    "number": 305,
+    "title": "Number of Islands II",
+    "difficulty": "hard",
+    "category": "DSU",
+    "hasSolution": true
+  },
+  {
+    "slug": "most-stones-removed-with-same-row-or-column",
+    "number": 947,
+    "title": "Most Stones Removed with Same Row or Column",
+    "difficulty": "medium",
+    "category": "DSU",
+    "hasSolution": true
+  },
+  {
+    "slug": "regions-cut-by-slashes",
+    "number": 959,
+    "title": "Regions Cut By Slashes",
+    "difficulty": "medium",
+    "category": "DSU",
+    "hasSolution": true
+  },
+  {
+    "slug": "bricks-falling-when-hit",
+    "number": 803,
+    "title": "Bricks Falling When Hit",
+    "difficulty": "hard",
+    "category": "DSU",
+    "hasSolution": true
+  },
+  {
+    "slug": "satisfiability-of-equality-equations",
+    "number": 990,
+    "title": "Satisfiability of Equality Equations",
+    "difficulty": "medium",
+    "category": "DSU",
+    "hasSolution": true
+  },
+  {
+    "slug": "making-a-large-island",
+    "number": 827,
+    "title": "Making A Large Island",
+    "difficulty": "hard",
+    "category": "DSU",
+    "hasSolution": true
+  },
+  {
+    "slug": "meeting-rooms-ii",
+    "number": 253,
+    "title": "Meeting Rooms II",
+    "difficulty": "medium",
+    "category": "Intervals",
+    "hasSolution": true
+  },
+  {
+    "slug": "merge-intervals",
+    "number": 56,
+    "title": "Merge Intervals",
+    "difficulty": "medium",
+    "category": "Intervals",
+    "hasSolution": true
+  },
+  {
+    "slug": "employee-free-time",
+    "number": 759,
+    "title": "Employee Free Time",
+    "difficulty": "hard",
+    "category": "Intervals",
+    "hasSolution": true
+  },
+  {
+    "slug": "the-skyline-problem",
+    "number": 218,
+    "title": "The Skyline Problem",
+    "difficulty": "hard",
+    "category": "Intervals",
+    "hasSolution": true
+  },
+  {
+    "slug": "car-pooling",
+    "number": 1094,
+    "title": "Car Pooling",
+    "difficulty": "medium",
+    "category": "Intervals",
+    "hasSolution": true
+  },
+  {
+    "slug": "range-module",
+    "number": 715,
+    "title": "Range Module",
+    "difficulty": "hard",
+    "category": "Intervals",
+    "hasSolution": true
+  },
+  {
+    "slug": "shortest-path-to-get-all-keys",
+    "number": 864,
+    "title": "Shortest Path to Get All Keys",
+    "difficulty": "hard",
+    "category": "Shortest Paths",
+    "hasSolution": true
+  },
+  {
+    "slug": "swim-in-rising-water",
+    "number": 778,
+    "title": "Swim in Rising Water",
+    "difficulty": "hard",
+    "category": "Shortest Paths",
+    "hasSolution": true
+  },
+  {
+    "slug": "network-delay-time",
+    "number": 743,
+    "title": "Network Delay Time",
+    "difficulty": "medium",
+    "category": "Shortest Paths",
+    "hasSolution": true
+  },
+  {
+    "slug": "cheapest-flights-within-k-stops",
+    "number": 787,
+    "title": "Cheapest Flights Within K Stops",
+    "difficulty": "medium",
+    "category": "Shortest Paths",
+    "hasSolution": true
+  },
+  {
+    "slug": "race-car",
+    "number": 818,
+    "title": "Race Car",
+    "difficulty": "hard",
+    "category": "Shortest Paths",
+    "hasSolution": true
+  },
+  {
+    "slug": "shortest-path-visiting-all-nodes",
+    "number": 847,
+    "title": "Shortest Path Visiting All Nodes",
+    "difficulty": "hard",
+    "category": "Shortest Paths",
+    "hasSolution": true
+  },
+  {
+    "slug": "fruit-into-baskets",
+    "number": 904,
+    "title": "Fruit Into Baskets",
+    "difficulty": "medium",
+    "category": "Sliding Window",
+    "hasSolution": true
+  },
+  {
+    "slug": "minimum-window-substring",
+    "number": 76,
+    "title": "Minimum Window Substring",
+    "difficulty": "hard",
+    "category": "Sliding Window",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-substring-with-at-most-k-distinct-characters",
+    "number": 340,
+    "title": "Longest Substring with At Most K Distinct Characters",
+    "difficulty": "medium",
+    "category": "Sliding Window",
+    "hasSolution": true
+  },
+  {
+    "slug": "longest-substring-without-repeating-characters",
+    "number": 3,
+    "title": "Longest Substring Without Repeating Characters",
+    "difficulty": "medium",
+    "category": "Sliding Window",
+    "hasSolution": true
+  },
+  {
+    "slug": "subarrays-with-k-different-integers",
+    "number": 992,
+    "title": "Subarrays with K Different Integers",
+    "difficulty": "hard",
+    "category": "Sliding Window",
+    "hasSolution": true
+  },
+  {
+    "slug": "minimum-operations-to-reduce-x-to-zero",
+    "number": 1658,
+    "title": "Minimum Operations to Reduce X to Zero",
+    "difficulty": "medium",
+    "category": "Sliding Window",
+    "hasSolution": true
+  },
+  {
+    "slug": "next-greater-element-i",
+    "number": 496,
+    "title": "Next Greater Element I",
+    "difficulty": "easy",
+    "category": "Monotonic Queue",
+    "hasSolution": true
+  },
+  {
+    "slug": "next-greater-element-ii",
+    "number": 503,
+    "title": "Next Greater Element II",
+    "difficulty": "medium",
+    "category": "Monotonic Queue",
+    "hasSolution": true
+  },
+  {
+    "slug": "daily-temperatures",
+    "number": 739,
+    "title": "Daily Temperatures",
+    "difficulty": "medium",
+    "category": "Monotonic Queue",
+    "hasSolution": true
+  },
+  {
+    "slug": "sliding-window-maximum",
+    "number": 239,
+    "title": "Sliding Window Maximum",
+    "difficulty": "hard",
+    "category": "Monotonic Queue",
+    "hasSolution": true
+  },
+  {
+    "slug": "largest-rectangle-in-histogram",
+    "number": 84,
+    "title": "Largest Rectangle in Histogram",
+    "difficulty": "hard",
+    "category": "Monotonic Queue",
+    "hasSolution": true
+  },
+  {
+    "slug": "maximal-rectangle",
+    "number": 85,
+    "title": "Maximal Rectangle",
+    "difficulty": "hard",
+    "category": "Monotonic Queue",
+    "hasSolution": true
+  },
+  {
+    "slug": "online-stock-span",
+    "number": 901,
+    "title": "Online Stock Span",
+    "difficulty": "medium",
+    "category": "Monotonic Queue",
+    "hasSolution": true
+  },
+  {
+    "slug": "design-search-autocomplete-system",
+    "number": 642,
+    "title": "Design Search Autocomplete System",
+    "difficulty": "hard",
+    "category": "Trie",
+    "hasSolution": true
+  },
+  {
+    "slug": "word-search-ii",
+    "number": 212,
+    "title": "Word Search II",
+    "difficulty": "hard",
+    "category": "Trie",
+    "hasSolution": true
+  },
+  {
+    "slug": "prefix-and-suffix-search",
+    "number": 745,
+    "title": "Prefix and Suffix Search",
+    "difficulty": "hard",
+    "category": "Trie",
+    "hasSolution": true
+  },
+  {
+    "slug": "stream-of-characters",
+    "number": 1032,
+    "title": "Stream of Characters",
+    "difficulty": "hard",
+    "category": "Trie",
+    "hasSolution": true
+  },
+  {
+    "slug": "text-justification",
+    "number": 68,
+    "title": "Text Justification",
+    "difficulty": "hard",
+    "category": "Trie",
+    "hasSolution": true
+  },
+  {
+    "slug": "expressive-words",
+    "number": 809,
+    "title": "Expressive Words",
+    "difficulty": "medium",
+    "category": "Trie",
+    "hasSolution": true
+  },
+  {
+    "slug": "odd-even-jump",
+    "number": 975,
+    "title": "Odd Even Jump",
+    "difficulty": "hard",
+    "category": "Math/Array",
+    "hasSolution": true
+  },
+  {
+    "slug": "xor-queries-of-a-subarray",
+    "number": 1310,
+    "title": "XOR Queries of a Subarray",
+    "difficulty": "medium",
+    "category": "Math/Array",
+    "hasSolution": true
+  },
+  {
+    "slug": "subarray-sum-equals-k",
+    "number": 560,
+    "title": "Subarray Sum Equals K",
+    "difficulty": "medium",
+    "category": "Math/Array",
+    "hasSolution": true
+  },
+  {
+    "slug": "continuous-subarray-sum",
+    "number": 523,
+    "title": "Continuous Subarray Sum",
+    "difficulty": "medium",
+    "category": "Math/Array",
+    "hasSolution": true
+  },
+  {
+    "slug": "find-the-duplicate-number",
+    "number": 287,
+    "title": "Find the Duplicate Number",
+    "difficulty": "medium",
+    "category": "Math/Array",
+    "hasSolution": true
+  },
+  {
+    "slug": "random-pick-with-weight",
+    "number": 528,
+    "title": "Random Pick with Weight",
+    "difficulty": "medium",
+    "category": "Math/Array",
+    "hasSolution": true
+  }
+]

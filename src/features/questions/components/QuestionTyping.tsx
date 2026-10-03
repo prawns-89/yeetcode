@@ -10,20 +10,54 @@ interface QuestionTypingProps {
   slug: string;
   title: string;
   code: string;
+  questId?: string;
 }
 
-export function QuestionTyping({ slug, title, code }: QuestionTypingProps) {
+export function QuestionTyping({ slug, title, code, questId }: QuestionTypingProps) {
   const { saveFromTypingResult } = useSaveSession();
 
   const [sessionMode, setSessionMode] = useState<"typing" | "study">("typing");
 
   const handleComplete = async (result: TypingSessionResult) => {
-    return saveFromTypingResult(result, {
+    const saveResult = await saveFromTypingResult(result, {
       snippetId: `questions/${slug}`,
       snippetTitle: title,
       mode: "questions",
       errors: result.errors,
     });
+
+    if (saveResult?.isFirstClear) {
+      try {
+        fetch("/api/github/commit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            snippetId: `questions/${slug}`,
+            snippetTitle: title,
+            code: code,
+            netWpm: result.netWpm,
+            accuracy: result.accuracy,
+          }),
+        }).catch((err) => {
+          console.error("Failed to commit to GitHub", err);
+        });
+      } catch (err) {
+        console.error("Failed to commit to GitHub", err);
+      }
+    }
+
+    // Mark quest problem complete if this session came from an island raid
+    if (questId) {
+      try {
+        await fetch("/api/islands/complete", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ questId }),
+        });
+      } catch {
+        // Non-critical — quest will still be markable next time
+      }
+    }
   };
 
   return (
@@ -54,3 +88,4 @@ export function QuestionTyping({ slug, title, code }: QuestionTypingProps) {
     </div>
   );
 }
+

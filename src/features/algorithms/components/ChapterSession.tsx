@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ChapterIntro } from "@/features/algorithms/components/ChapterIntro";
 import { SnippetCard } from "@/features/algorithms/components/SnippetCard";
 import { TypingCanvas } from "@/features/typing/components/TypingCanvas";
@@ -51,10 +51,11 @@ export function ChapterSession({
     chapter.snippets[0]?.id ?? "",
   );
 
-  const activeSnippet = useMemo(
-    () => chapter.snippets.find((snippet) => snippet.id === activeSnippetId),
-    [chapter.snippets, activeSnippetId],
+  const activeSnippetIndex = chapter.snippets.findIndex(
+    (snippet) => snippet.id === activeSnippetId,
   );
+  const activeSnippet = chapter.snippets[activeSnippetIndex];
+  const nextSnippet = chapter.snippets[activeSnippetIndex + 1];
 
   const handleComplete = async (result: TypingSessionResult) => {
     if (!activeSnippet) return null;
@@ -62,12 +63,35 @@ export function ChapterSession({
       netWpm: result.netWpm,
       accuracy: result.accuracy,
     });
-    return saveFromTypingResult(result, {
+    const saveResult = await saveFromTypingResult(result, {
       snippetId: snippetKey(track.id, chapter.id, activeSnippet.id),
       snippetTitle: activeSnippet.title,
       mode: "algorithms",
       errors: result.errors,
     });
+
+    if (saveResult?.isFirstClear) {
+      try {
+        fetch("/api/github/commit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            snippetId: snippetKey(track.id, chapter.id, activeSnippet.id),
+            snippetTitle: activeSnippet.title,
+            code: activeSnippet.code,
+            language: track.language,
+            netWpm: result.netWpm,
+            accuracy: result.accuracy,
+          }),
+        }).catch((err) => {
+          console.error("Failed to commit to GitHub", err);
+        });
+      } catch (err) {
+        console.error("Failed to commit to GitHub", err);
+      }
+    }
+
+    return saveResult;
   };
 
   if (chapter.snippets.length === 0) {
@@ -166,6 +190,11 @@ export function ChapterSession({
                   code={activeSnippet.code}
                   language={track.language ?? "C++"}
                   onComplete={handleComplete}
+                  onNext={
+                    nextSnippet
+                      ? () => setActiveSnippetId(nextSnippet.id)
+                      : undefined
+                  }
                 />
               ) : (
                 <CodeStudyViewer

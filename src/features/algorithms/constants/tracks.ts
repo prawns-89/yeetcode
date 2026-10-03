@@ -6,6 +6,7 @@ import { track4Graphs } from "@/features/algorithms/constants/track4";
 import { track5CoreCpp } from "@/features/algorithms/constants/track5";
 import { track6PythonML } from "@/features/algorithms/constants/track6";
 import { track7PyTorch } from "@/features/algorithms/constants/track7";
+import { track10MissingSemester } from "@/features/algorithms/constants/track10";
 
 export const algorithmTracks: AlgorithmTrack[] = [
   track1Foundations,
@@ -15,6 +16,7 @@ export const algorithmTracks: AlgorithmTrack[] = [
   track5CoreCpp,
   track6PythonML,
   track7PyTorch,
+  track10MissingSemester,
 ];
 
 export function getTrackById(trackId: string): AlgorithmTrack | undefined {
